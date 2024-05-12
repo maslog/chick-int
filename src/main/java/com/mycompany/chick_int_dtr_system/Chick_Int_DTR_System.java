@@ -15,7 +15,6 @@ public class Chick_Int_DTR_System {
 
     public static void main(String[] args) {
         FlatLightLaf.setup();
-        UIManager.put("jButton2.arc", 999);
         
         new UserUI().setVisible(true);
         

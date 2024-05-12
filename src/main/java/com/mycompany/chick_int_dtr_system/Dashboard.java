@@ -4,6 +4,7 @@
  */
 package com.mycompany.chick_int_dtr_system;
 
+import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
 import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,10 +80,22 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         TimeInBTN = new javax.swing.JButton();
         TimeOutBTN = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         employeePane = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jPanel13 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        addEmployeeBTN = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         reportsPane = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         settingsPane = new javax.swing.JPanel();
@@ -128,6 +141,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("00:00:00");
         jPanel7.add(jLabel1, java.awt.BorderLayout.PAGE_END);
@@ -164,9 +178,8 @@ public class Dashboard extends javax.swing.JFrame {
         hero.setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 206, 0));
-        jTabbedPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTabbedPane1.setForeground(new java.awt.Color(102, 102, 102));
-        jTabbedPane1.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jTabbedPane1.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 18)); // NOI18N
         jTabbedPane1.setOpaque(true);
 
         dashboardPane.setBackground(new java.awt.Color(255, 206, 0));
@@ -184,7 +197,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
+            .addGap(0, 446, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -264,33 +277,21 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel9.add(jPanel10, java.awt.BorderLayout.WEST);
 
-        jPanel3.setBackground(new java.awt.Color(255, 0, 0));
-        jPanel3.setMinimumSize(new java.awt.Dimension(50, 50));
-        jPanel3.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel11.setBackground(new java.awt.Color(255, 206, 0));
+        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setText("Search:");
+        jPanel11.add(jLabel5);
 
-        jPanel9.add(jPanel3, java.awt.BorderLayout.LINE_END);
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jTextField1.setColumns(20);
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jTextField1);
 
         jPanel9.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -305,25 +306,105 @@ public class Dashboard extends javax.swing.JFrame {
         jTabbedPane1.addTab("Dashboard", dashboardPane);
 
         employeePane.setBackground(new java.awt.Color(255, 206, 0));
+        employeePane.setLayout(new java.awt.BorderLayout());
 
-        jLabel6.setText("Employee");
+        jSplitPane2.setDividerLocation(300);
 
-        javax.swing.GroupLayout employeePaneLayout = new javax.swing.GroupLayout(employeePane);
-        employeePane.setLayout(employeePaneLayout);
-        employeePaneLayout.setHorizontalGroup(
-            employeePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(employeePaneLayout.createSequentialGroup()
-                .addGap(357, 357, 357)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1008, Short.MAX_VALUE))
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
-        employeePaneLayout.setVerticalGroup(
-            employeePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(employeePaneLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel6)
-                .addContainerGap(337, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 446, Short.MAX_VALUE)
         );
+
+        jSplitPane2.setLeftComponent(jPanel3);
+
+        jPanel12.setLayout(new java.awt.BorderLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jPanel12.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel13.setBackground(new java.awt.Color(255, 206, 0));
+        jPanel13.setMinimumSize(new java.awt.Dimension(220, 150));
+        jPanel13.setName(""); // NOI18N
+        jPanel13.setPreferredSize(new java.awt.Dimension(1175, 150));
+        jPanel13.setRequestFocusEnabled(false);
+        jPanel13.setLayout(new java.awt.BorderLayout(10, 10));
+
+        jPanel14.setMinimumSize(new java.awt.Dimension(200, 40));
+        jPanel14.setPreferredSize(new java.awt.Dimension(200, 40));
+        jPanel14.setLayout(new java.awt.BorderLayout());
+
+        jPanel15.setBackground(new java.awt.Color(255, 206, 0));
+        jPanel15.setMinimumSize(new java.awt.Dimension(250, 100));
+        jPanel15.setPreferredSize(new java.awt.Dimension(250, 100));
+        jPanel15.setLayout(new java.awt.GridBagLayout());
+
+        addEmployeeBTN.setBackground(new java.awt.Color(0, 153, 153));
+        addEmployeeBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addEmployeeBTN.setForeground(new java.awt.Color(255, 255, 255));
+        addEmployeeBTN.setText("Add Employee");
+        addEmployeeBTN.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        addEmployeeBTN.setMinimumSize(new java.awt.Dimension(150, 38));
+        addEmployeeBTN.setPreferredSize(new java.awt.Dimension(150, 38));
+        addEmployeeBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeBTNActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel15.add(addEmployeeBTN, gridBagConstraints);
+
+        jPanel14.add(jPanel15, java.awt.BorderLayout.WEST);
+
+        jPanel16.setBackground(new java.awt.Color(255, 206, 0));
+        jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setText("Search:");
+        jPanel16.add(jLabel9);
+
+        jTextField2.setColumns(20);
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(jTextField2);
+
+        jPanel14.add(jPanel16, java.awt.BorderLayout.CENTER);
+
+        jPanel13.add(jPanel14, java.awt.BorderLayout.SOUTH);
+
+        jPanel12.add(jPanel13, java.awt.BorderLayout.PAGE_START);
+
+        jSplitPane2.setRightComponent(jPanel12);
+
+        employeePane.add(jSplitPane2, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Employee", employeePane);
 
@@ -338,14 +419,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(reportsPaneLayout.createSequentialGroup()
                 .addGap(379, 379, 379)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(995, Short.MAX_VALUE))
+                .addContainerGap(1001, Short.MAX_VALUE))
         );
         reportsPaneLayout.setVerticalGroup(
             reportsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportsPaneLayout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addComponent(jLabel7)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reports", reportsPane);
@@ -361,14 +442,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(settingsPaneLayout.createSequentialGroup()
                 .addGap(379, 379, 379)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(994, Short.MAX_VALUE))
+                .addContainerGap(1000, Short.MAX_VALUE))
         );
         settingsPaneLayout.setVerticalGroup(
             settingsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPaneLayout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jLabel8)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addContainerGap(306, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", settingsPane);
@@ -394,6 +475,20 @@ public class Dashboard extends javax.swing.JFrame {
         new UserUI().setVisible(rootPaneCheckingEnabled);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void addEmployeeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeBTNActionPerformed
+        // TODO add your handling code here:
+        new AddEmployeeModal(null,true).show();
+        
+    }//GEN-LAST:event_addEmployeeBTNActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -433,6 +528,7 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton TimeInBTN;
     private javax.swing.JButton TimeOutBTN;
+    private javax.swing.JButton addEmployeeBTN;
     private javax.swing.JPanel dashboardPane;
     private javax.swing.JPanel employeePane;
     private javax.swing.JPanel header;
@@ -443,12 +539,18 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -458,9 +560,14 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel reportsPane;
     private javax.swing.JPanel settingsPane;
     // End of variables declaration//GEN-END:variables
