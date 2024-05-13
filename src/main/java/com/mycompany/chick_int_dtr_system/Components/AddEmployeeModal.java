@@ -4,18 +4,23 @@
  */
 package com.mycompany.chick_int_dtr_system.Components;
 
-
-
+import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_CANCEL;
+import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_OK;
 import com.mycompany.chick_int_dtr_system.Dashboard;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-
-
 
 /**
  *
@@ -40,12 +45,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         super(parent, modal);
         dashboard = parent;
         initComponents();
-        
-        
-        
-        
-        
-        
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -58,6 +57,28 @@ public class AddEmployeeModal extends javax.swing.JDialog {
             }
         });
     }
+
+    public void insertData() {
+        try {
+            String firstname = jFirstName.getText();
+            String middlename = jMiddleName.getText();
+            String lastname = jLastName.getText();
+
+            Connection conn = Database.getConnection();
+            String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
 
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
@@ -76,7 +97,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         buttonPanel = new javax.swing.JPanel();
         okButton = new javax.swing.JButton();
@@ -97,8 +119,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lGender = new javax.swing.JLabel();
         jAge = new javax.swing.JTextField();
         lAge = new javax.swing.JLabel();
-        jBirth = new javax.swing.JTextField();
         lBirth = new javax.swing.JLabel();
+        jBirth = new org.jdesktop.swingx.JXDatePicker();
         jSeparator1 = new javax.swing.JSeparator();
         FAddressMain = new javax.swing.JPanel();
         FAddess = new javax.swing.JPanel();
@@ -126,15 +148,18 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jSeparator3 = new javax.swing.JSeparator();
         FPositionMain = new javax.swing.JPanel();
         FPosition = new javax.swing.JPanel();
-        jPhoneNumber1 = new javax.swing.JTextField();
-        lPhoneNumber1 = new javax.swing.JLabel();
-        jEmail1 = new javax.swing.JTextField();
-        lEmail1 = new javax.swing.JLabel();
-        jEmergencyName1 = new javax.swing.JTextField();
-        lEmergencyName1 = new javax.swing.JLabel();
+        jPositionTitle = new javax.swing.JTextField();
+        lPositionTitle = new javax.swing.JLabel();
+        jEmploymentType = new javax.swing.JTextField();
+        lEmploymentType = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jEmergencyNumber1 = new javax.swing.JTextField();
-        lEmergencyNumber1 = new javax.swing.JLabel();
+        lStartDate = new javax.swing.JLabel();
+        lProfile = new javax.swing.JLabel();
+        lEndDate1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jEndDate = new org.jdesktop.swingx.JXDatePicker();
+        jStartDate = new org.jdesktop.swingx.JXDatePicker();
+        jSeparator4 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -148,17 +173,22 @@ public class AddEmployeeModal extends javax.swing.JDialog {
             }
         });
 
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(500, 500));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 500));
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setAutoscrolls(true);
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(500, 800));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(500, 800));
 
+        jPanel1.setMinimumSize(new java.awt.Dimension(500, 1000));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 1000));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         buttonPanel.setBackground(new java.awt.Color(255, 206, 0));
+        buttonPanel.setMinimumSize(new java.awt.Dimension(171, 60));
+        buttonPanel.setPreferredSize(new java.awt.Dimension(171, 60));
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        okButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +198,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         buttonPanel.add(okButton);
         getRootPane().setDefaultButton(okButton);
 
+        cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,10 +210,13 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPanel1.add(buttonPanel, java.awt.BorderLayout.PAGE_END);
 
         main.setBackground(new java.awt.Color(255, 206, 0));
+        main.setMinimumSize(new java.awt.Dimension(500, 500));
+        main.setPreferredSize(new java.awt.Dimension(500, 500));
         main.setLayout(new java.awt.BorderLayout());
 
         jForm.setBackground(new java.awt.Color(255, 206, 0));
-        jForm.setPreferredSize(new java.awt.Dimension(500, 450));
+        jForm.setMinimumSize(new java.awt.Dimension(4550, 100));
+        jForm.setPreferredSize(new java.awt.Dimension(500, 100));
         jForm.setRequestFocusEnabled(false);
 
         FNameMain.setMinimumSize(new java.awt.Dimension(100, 100));
@@ -190,10 +224,10 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FNameMain.setLayout(new java.awt.BorderLayout());
 
         FName.setBackground(new java.awt.Color(255, 206, 0));
-        java.awt.GridBagLayout FNameLayout = new java.awt.GridBagLayout();
-        FNameLayout.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
-        FNameLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0};
-        FName.setLayout(FNameLayout);
+        java.awt.GridBagLayout FNameLayout1 = new java.awt.GridBagLayout();
+        FNameLayout1.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
+        FNameLayout1.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0};
+        FName.setLayout(FNameLayout1);
 
         jFirstName.setColumns(12);
         jFirstName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -275,10 +309,10 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FGenderAgeBirthMain.setBackground(new java.awt.Color(255, 206, 0));
         FGenderAgeBirthMain.setMinimumSize(new java.awt.Dimension(600, 100));
         FGenderAgeBirthMain.setPreferredSize(new java.awt.Dimension(600, 100));
-        java.awt.GridBagLayout FGenderAgeBirthLayout = new java.awt.GridBagLayout();
-        FGenderAgeBirthLayout.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
-        FGenderAgeBirthLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        FGenderAgeBirthMain.setLayout(FGenderAgeBirthLayout);
+        java.awt.GridBagLayout FGenderAgeBirthMainLayout = new java.awt.GridBagLayout();
+        FGenderAgeBirthMainLayout.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
+        FGenderAgeBirthMainLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        FGenderAgeBirthMain.setLayout(FGenderAgeBirthMainLayout);
 
         jGender.setColumns(12);
         jGender.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -322,19 +356,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FGenderAgeBirthMain.add(lAge, gridBagConstraints);
 
-        jBirth.setColumns(12);
-        jBirth.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jBirth.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jBirth.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jBirth.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        jBirth.setMinimumSize(new java.awt.Dimension(5, 32));
-        jBirth.setOpaque(true);
-        jBirth.setPreferredSize(new java.awt.Dimension(160, 32));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 2;
-        FGenderAgeBirthMain.add(jBirth, gridBagConstraints);
-
         lBirth.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lBirth.setText("Birth Date");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -342,6 +363,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FGenderAgeBirthMain.add(lBirth, gridBagConstraints);
+
+        jBirth.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jBirth.setMinimumSize(new java.awt.Dimension(160, 32));
+        jBirth.setPreferredSize(new java.awt.Dimension(160, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
+        FGenderAgeBirthMain.add(jBirth, gridBagConstraints);
 
         jForm.add(FGenderAgeBirthMain);
 
@@ -358,10 +387,10 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FAddess.setBackground(new java.awt.Color(255, 206, 0));
         FAddess.setMinimumSize(new java.awt.Dimension(296, 300));
         FAddess.setPreferredSize(new java.awt.Dimension(296, 300));
-        java.awt.GridBagLayout FName1Layout = new java.awt.GridBagLayout();
-        FName1Layout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        FName1Layout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
-        FAddess.setLayout(FName1Layout);
+        java.awt.GridBagLayout FAddessLayout = new java.awt.GridBagLayout();
+        FAddessLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
+        FAddessLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
+        FAddess.setLayout(FAddessLayout);
 
         jStreetAddress.setColumns(20);
         jStreetAddress.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -370,6 +399,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jStreetAddress.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jStreetAddress.setMinimumSize(new java.awt.Dimension(160, 32));
         jStreetAddress.setOpaque(true);
+        jStreetAddress.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -391,11 +421,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jCity.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jCity.setMinimumSize(new java.awt.Dimension(160, 32));
         jCity.setOpaque(true);
-        jCity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCityActionPerformed(evt);
-            }
-        });
+        jCity.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
@@ -416,6 +442,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jRegion.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jRegion.setMinimumSize(new java.awt.Dimension(160, 32));
         jRegion.setOpaque(true);
+        jRegion.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 12;
@@ -445,6 +472,12 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPostalCode.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jPostalCode.setMinimumSize(new java.awt.Dimension(160, 32));
         jPostalCode.setOpaque(true);
+        jPostalCode.setPreferredSize(new java.awt.Dimension(160, 32));
+        jPostalCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPostalCodeActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 12;
@@ -475,10 +508,10 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FContact.setBackground(new java.awt.Color(255, 206, 0));
         FContact.setMinimumSize(new java.awt.Dimension(296, 300));
         FContact.setPreferredSize(new java.awt.Dimension(296, 300));
-        java.awt.GridBagLayout FAddess1Layout = new java.awt.GridBagLayout();
-        FAddess1Layout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        FAddess1Layout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
-        FContact.setLayout(FAddess1Layout);
+        java.awt.GridBagLayout FContactLayout = new java.awt.GridBagLayout();
+        FContactLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
+        FContactLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
+        FContact.setLayout(FContactLayout);
 
         jPhoneNumber.setColumns(20);
         jPhoneNumber.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -487,6 +520,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPhoneNumber.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jPhoneNumber.setMinimumSize(new java.awt.Dimension(160, 32));
         jPhoneNumber.setOpaque(true);
+        jPhoneNumber.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -508,11 +542,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmail.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jEmail.setMinimumSize(new java.awt.Dimension(160, 32));
         jEmail.setOpaque(true);
-        jEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jEmailActionPerformed(evt);
-            }
-        });
+        jEmail.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 6;
@@ -533,6 +563,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmergencyName.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jEmergencyName.setMinimumSize(new java.awt.Dimension(160, 32));
         jEmergencyName.setOpaque(true);
+        jEmergencyName.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 12;
@@ -562,6 +593,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmergencyNumber.setMargin(new java.awt.Insets(10, 10, 10, 10));
         jEmergencyNumber.setMinimumSize(new java.awt.Dimension(160, 32));
         jEmergencyNumber.setOpaque(true);
+        jEmergencyNumber.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 12;
@@ -585,80 +617,60 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jSeparator3.setPreferredSize(new java.awt.Dimension(500, 10));
         jForm.add(jSeparator3);
 
-        FPositionMain.setMinimumSize(new java.awt.Dimension(600, 150));
-        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 150));
+        FPositionMain.setMinimumSize(new java.awt.Dimension(600, 300));
+        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 300));
         FPositionMain.setLayout(new java.awt.BorderLayout());
 
         FPosition.setBackground(new java.awt.Color(255, 206, 0));
-        FPosition.setMinimumSize(new java.awt.Dimension(296, 300));
-        FPosition.setPreferredSize(new java.awt.Dimension(296, 300));
-        FPosition.setLayout(new java.awt.GridBagLayout());
+        FPosition.setMinimumSize(new java.awt.Dimension(296, 100));
+        FPosition.setPreferredSize(new java.awt.Dimension(296, 100));
+        java.awt.GridBagLayout FPositionLayout = new java.awt.GridBagLayout();
+        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0};
+        FPositionLayout.rowHeights = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
+        FPosition.setLayout(FPositionLayout);
 
-        jPhoneNumber1.setColumns(20);
-        jPhoneNumber1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPhoneNumber1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPhoneNumber1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jPhoneNumber1.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        jPhoneNumber1.setMinimumSize(new java.awt.Dimension(160, 32));
-        jPhoneNumber1.setOpaque(true);
+        jPositionTitle.setColumns(20);
+        jPositionTitle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jPositionTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPositionTitle.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jPositionTitle.setMargin(new java.awt.Insets(10, 10, 10, 10));
+        jPositionTitle.setMinimumSize(new java.awt.Dimension(160, 32));
+        jPositionTitle.setOpaque(true);
+        jPositionTitle.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        FPosition.add(jPhoneNumber1, gridBagConstraints);
+        FPosition.add(jPositionTitle, gridBagConstraints);
 
-        lPhoneNumber1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lPhoneNumber1.setText("Phone Number");
+        lPositionTitle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lPositionTitle.setText("Position Title");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        FPosition.add(lPhoneNumber1, gridBagConstraints);
+        FPosition.add(lPositionTitle, gridBagConstraints);
 
-        jEmail1.setColumns(20);
-        jEmail1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jEmail1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jEmail1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jEmail1.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        jEmail1.setMinimumSize(new java.awt.Dimension(160, 32));
-        jEmail1.setOpaque(true);
-        jEmail1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jEmail1ActionPerformed(evt);
-            }
-        });
+        jEmploymentType.setColumns(20);
+        jEmploymentType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jEmploymentType.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jEmploymentType.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jEmploymentType.setMargin(new java.awt.Insets(10, 10, 10, 10));
+        jEmploymentType.setMinimumSize(new java.awt.Dimension(160, 32));
+        jEmploymentType.setOpaque(true);
+        jEmploymentType.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 6;
-        FPosition.add(jEmail1, gridBagConstraints);
+        FPosition.add(jEmploymentType, gridBagConstraints);
 
-        lEmail1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lEmail1.setText("E-mail");
+        lEmploymentType.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lEmploymentType.setText("Employment Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        FPosition.add(lEmail1, gridBagConstraints);
-
-        jEmergencyName1.setColumns(20);
-        jEmergencyName1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jEmergencyName1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jEmergencyName1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jEmergencyName1.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        jEmergencyName1.setMinimumSize(new java.awt.Dimension(160, 32));
-        jEmergencyName1.setOpaque(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        FPosition.add(jEmergencyName1, gridBagConstraints);
-
-        lEmergencyName1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lEmergencyName1.setText("Emergency Contact Name");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        FPosition.add(lEmergencyName1, gridBagConstraints);
+        FPosition.add(lEmploymentType, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -669,37 +681,78 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(jLabel5, gridBagConstraints);
 
-        jEmergencyNumber1.setColumns(20);
-        jEmergencyNumber1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jEmergencyNumber1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jEmergencyNumber1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jEmergencyNumber1.setMargin(new java.awt.Insets(10, 10, 10, 10));
-        jEmergencyNumber1.setMinimumSize(new java.awt.Dimension(160, 32));
-        jEmergencyNumber1.setOpaque(true);
+        lStartDate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lStartDate.setText("Start Date");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
-        FPosition.add(jEmergencyNumber1, gridBagConstraints);
-
-        lEmergencyNumber1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lEmergencyNumber1.setText("Emergency Contact  Number");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(lStartDate, gridBagConstraints);
+
+        lProfile.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lProfile.setText("Choose Profile");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 24;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(lProfile, gridBagConstraints);
+
+        lEndDate1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lEndDate1.setText("Contract End Date (optional)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(lEndDate1, gridBagConstraints);
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setText("Select Image");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(jButton1, gridBagConstraints);
+
+        jEndDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jEndDate.setMinimumSize(new java.awt.Dimension(200, 32));
+        jEndDate.setPreferredSize(new java.awt.Dimension(200, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        FPosition.add(lEmergencyNumber1, gridBagConstraints);
+        FPosition.add(jEndDate, gridBagConstraints);
+
+        jStartDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jStartDate.setMinimumSize(new java.awt.Dimension(200, 32));
+        jStartDate.setPreferredSize(new java.awt.Dimension(200, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        FPosition.add(jStartDate, gridBagConstraints);
 
         FPositionMain.add(FPosition, java.awt.BorderLayout.CENTER);
 
         jForm.add(FPositionMain);
 
+        jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator4.setMinimumSize(new java.awt.Dimension(500, 10));
+        jSeparator4.setPreferredSize(new java.awt.Dimension(500, 10));
+        jForm.add(jSeparator4);
+
         main.add(jForm, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(main, java.awt.BorderLayout.CENTER);
 
-        jScrollPane1.setViewportView(jPanel1);
+        jScrollPane2.setViewportView(jPanel1);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setBackground(new java.awt.Color(255, 206, 0));
         jPanel3.setMinimumSize(new java.awt.Dimension(251, 60));
@@ -719,14 +772,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        doClose(RET_OK);
-    }//GEN-LAST:event_okButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        doClose(RET_CANCEL);
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
     /**
      * Closes the dialog
      */
@@ -734,18 +779,28 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
 
-    private void jCityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCityActionPerformed
+    private void jPostalCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostalCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCityActionPerformed
+    }//GEN-LAST:event_jPostalCodeActionPerformed
 
-    private void jEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEmailActionPerformed
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jEmailActionPerformed
+        insertData();
+        doClose(RET_OK);
+    }//GEN-LAST:event_okButtonActionPerformed
 
-    private void jEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEmail1ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jEmail1ActionPerformed
-    
+        doClose(RET_CANCEL);
+
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void doClose(int retStatus) {
         returnStatus = retStatus;
         setVisible(false);
@@ -807,14 +862,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField jAge;
-    private javax.swing.JTextField jBirth;
+    private org.jdesktop.swingx.JXDatePicker jBirth;
+    private javax.swing.JButton jButton1;
     private javax.swing.JTextField jCity;
     private javax.swing.JTextField jEmail;
-    private javax.swing.JTextField jEmail1;
     private javax.swing.JTextField jEmergencyName;
-    private javax.swing.JTextField jEmergencyName1;
     private javax.swing.JTextField jEmergencyNumber;
-    private javax.swing.JTextField jEmergencyNumber1;
+    private javax.swing.JTextField jEmploymentType;
+    private org.jdesktop.swingx.JXDatePicker jEndDate;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JTextField jFirstName;
     private javax.swing.JPanel jForm;
     private javax.swing.JTextField jGender;
@@ -828,31 +884,34 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jPhoneNumber;
-    private javax.swing.JTextField jPhoneNumber1;
+    private javax.swing.JTextField jPositionTitle;
     private javax.swing.JTextField jPostalCode;
     private javax.swing.JTextField jRegion;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private org.jdesktop.swingx.JXDatePicker jStartDate;
     private javax.swing.JTextField jStreetAddress;
     private javax.swing.JLabel lAge;
     private javax.swing.JLabel lBirth;
     private javax.swing.JLabel lCity;
     private javax.swing.JLabel lEmail;
-    private javax.swing.JLabel lEmail1;
     private javax.swing.JLabel lEmergencyName;
-    private javax.swing.JLabel lEmergencyName1;
     private javax.swing.JLabel lEmergencyNumber;
-    private javax.swing.JLabel lEmergencyNumber1;
+    private javax.swing.JLabel lEmploymentType;
+    private javax.swing.JLabel lEndDate1;
     private javax.swing.JLabel lFirstName;
     private javax.swing.JLabel lGender;
     private javax.swing.JLabel lLastName;
     private javax.swing.JLabel lMiddleName;
     private javax.swing.JLabel lPhoneNumber;
-    private javax.swing.JLabel lPhoneNumber1;
+    private javax.swing.JLabel lPositionTitle;
     private javax.swing.JLabel lPostalCode;
+    private javax.swing.JLabel lProfile;
     private javax.swing.JLabel lRegion;
+    private javax.swing.JLabel lStartDate;
     private javax.swing.JLabel lStreet;
     private javax.swing.JPanel main;
     private javax.swing.JButton okButton;

@@ -2,12 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.chick_int_dtr_system;
+package com.mycompany.chick_int_dtr_system.Components.experiment;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.mycompany.chick_int_dtr_system.Components.form1;
-import com.mycompany.chick_int_dtr_system.Components.form2;
-import com.mycompany.chick_int_dtr_system.Components.home;
 import javax.swing.JComponent;
 
 /**

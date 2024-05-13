@@ -74,7 +74,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDashboard = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -167,7 +167,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
+            .addGap(0, 446, Short.MAX_VALUE)
         );
 
         header.add(jPanel8, java.awt.BorderLayout.SOUTH);
@@ -204,18 +204,34 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDashboard.setAutoCreateRowSorter(true);
+        jTableDashboard.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableDashboard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Time In", "Time Out", "Date"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableDashboard.getTableHeader().setResizingAllowed(false);
+        jTableDashboard.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTableDashboard);
+        if (jTableDashboard.getColumnModel().getColumnCount() > 0) {
+            jTableDashboard.getColumnModel().getColumn(0).setResizable(false);
+            jTableDashboard.getColumnModel().getColumn(1).setResizable(false);
+            jTableDashboard.getColumnModel().getColumn(2).setResizable(false);
+            jTableDashboard.getColumnModel().getColumn(3).setResizable(false);
+            jTableDashboard.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -564,8 +580,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableDashboard;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel reportsPane;

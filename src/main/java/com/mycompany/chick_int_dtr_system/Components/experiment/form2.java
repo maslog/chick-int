@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.chick_int_dtr_system.Components;
+package com.mycompany.chick_int_dtr_system.Components.experiment;
 
 /**
  *
