@@ -4,12 +4,23 @@
  */
 package com.mycompany.chick_int_dtr_system;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
+import com.mycompany.chick_int_dtr_system.Components.Database;
 import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
+import com.mysql.cj.xdevapi.Result;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,12 +32,16 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public Dashboard() {
+        FlatLightLaf.setup();
+        
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
+
+        addDataToTable();
         
-         updateTimeAndDate();
+        updateTimeAndDate();
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,9 +50,41 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         timer.start();
-        
+
     }
-    
+
+    public void addDataToTable() {
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            String query = "SELECT * FROM `db_chick_int`.`employee` WHERE isActive = 1";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while(rs.next()){
+                String id = String.valueOf(rs.getInt("idemployee"));
+                String firstname = rs.getString("firstname");
+                String middlename = rs.getString("middlename");
+                String lastname = rs.getString("lastname");
+                
+                String[] data = {id, firstname, middlename, lastname};
+                DefaultTableModel tblModel = (DefaultTableModel) jTableEmployee.getModel();
+                
+                tblModel.addRow(data);
+                
+                
+                
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void updateTimeAndDate() {
 
         DigitalClock upTimeAndDate = new DigitalClock();
@@ -61,7 +108,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -88,7 +134,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableEmployee = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -124,10 +170,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(248, 103, 32));
 
-        jButton1.setText("Mode");
-        jPanel6.add(jButton1);
-
-        jButton2.setText("Logout");
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(51, 51, 51));
+        jButton2.setText("Log Out");
+        jButton2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jButton2.setMinimumSize(new java.awt.Dimension(100, 40));
+        jButton2.setPreferredSize(new java.awt.Dimension(100, 40));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -204,6 +252,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         jTableDashboard.setAutoCreateRowSorter(true);
         jTableDashboard.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTableDashboard.setModel(new javax.swing.table.DefaultTableModel(
@@ -222,6 +272,7 @@ public class Dashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableDashboard.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTableDashboard.getTableHeader().setResizingAllowed(false);
         jTableDashboard.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableDashboard);
@@ -254,11 +305,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel10Layout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         jPanel10.setLayout(jPanel10Layout);
 
-        TimeInBTN.setBackground(new java.awt.Color(0, 204, 0));
+        TimeInBTN.setBackground(new java.awt.Color(0, 204, 51));
         TimeInBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TimeInBTN.setForeground(new java.awt.Color(255, 255, 255));
         TimeInBTN.setText("Time In");
-        TimeInBTN.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        TimeInBTN.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         TimeInBTN.setMinimumSize(new java.awt.Dimension(120, 32));
         TimeInBTN.setPreferredSize(new java.awt.Dimension(120, 32));
         TimeInBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -274,10 +325,13 @@ public class Dashboard extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel10.add(TimeInBTN, gridBagConstraints);
 
-        TimeOutBTN.setBackground(new java.awt.Color(255, 0, 0));
+        TimeOutBTN.setBackground(new java.awt.Color(255, 0, 51));
         TimeOutBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TimeOutBTN.setForeground(new java.awt.Color(255, 255, 255));
         TimeOutBTN.setText("Time Out");
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder1 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder1.setShadowColor(new java.awt.Color(255, 255, 255));
+        TimeOutBTN.setBorder(dropShadowBorder1);
         TimeOutBTN.setMinimumSize(new java.awt.Dimension(120, 32));
         TimeOutBTN.setPreferredSize(new java.awt.Dimension(120, 32));
         TimeOutBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -343,18 +397,28 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel12.setLayout(new java.awt.BorderLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEmployee.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jTableEmployee.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableEmployee.setForeground(new java.awt.Color(0, 0, 0));
+        jTableEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "First Name", "Middle Name", "Last Name", "Gender", "Phone Number", "E-mail", "Position", "Action"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jTableEmployee.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableEmployee.setEditingColumn(0);
+        jTableEmployee.setEditingRow(0);
+        jTableEmployee.setEnabled(false);
+        jTableEmployee.setFillsViewportHeight(true);
+        jTableEmployee.setGridColor(new java.awt.Color(153, 153, 153));
+        jTableEmployee.setRowHeight(30);
+        jTableEmployee.setShowGrid(true);
+        jTableEmployee.setShowVerticalLines(false);
+        jTableEmployee.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableEmployee);
 
         jPanel12.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -374,11 +438,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel15.setPreferredSize(new java.awt.Dimension(250, 100));
         jPanel15.setLayout(new java.awt.GridBagLayout());
 
-        addEmployeeBTN.setBackground(new java.awt.Color(0, 153, 153));
+        addEmployeeBTN.setBackground(new java.awt.Color(0, 102, 153));
         addEmployeeBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addEmployeeBTN.setForeground(new java.awt.Color(255, 255, 255));
         addEmployeeBTN.setText("Add Employee");
-        addEmployeeBTN.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        addEmployeeBTN.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         addEmployeeBTN.setMinimumSize(new java.awt.Dimension(150, 38));
         addEmployeeBTN.setPreferredSize(new java.awt.Dimension(150, 38));
         addEmployeeBTN.addActionListener(new java.awt.event.ActionListener() {
@@ -480,10 +544,15 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void TimeOutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeOutBTNActionPerformed
         // TODO add your handling code here:
+        new TimeOutDashboard().setVisible(rootPaneCheckingEnabled);
+        this.dispose();
     }//GEN-LAST:event_TimeOutBTNActionPerformed
 
     private void TimeInBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeInBTNActionPerformed
         // TODO add your handling code here:
+        new TimeInDashboard().setVisible(rootPaneCheckingEnabled);
+        this.dispose();
+        
     }//GEN-LAST:event_TimeInBTNActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -498,8 +567,8 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void addEmployeeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeBTNActionPerformed
         // TODO add your handling code here:
-        new AddEmployeeModal(null,true).show();
-        
+        new AddEmployeeModal(null, true).show();
+
     }//GEN-LAST:event_addEmployeeBTNActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -549,7 +618,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel employeePane;
     private javax.swing.JPanel header;
     private javax.swing.JPanel hero;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -580,8 +648,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableDashboard;
+    private javax.swing.JTable jTableEmployee;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel reportsPane;

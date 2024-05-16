@@ -112,23 +112,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="homeBTNActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="settingBTN">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="ce" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="14" style="1"/>
-                    </Property>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\Ronald\Documents\NetBeansProjects\Chick_Int_DTR_System\src\main\java\com\mycompany\chick_int_dtr_system\assets\3844439-gear-setting-settings-wheel_110294.png"/>
-                    </Property>
-                    <Property name="borderPainted" type="boolean" value="false"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingBTNActionPerformed"/>
-                  </Events>
-                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -268,9 +251,7 @@
                             <Property name="text" type="java.lang.String" value="TIME IN"/>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-                                <BevelBorder/>
-                              </Border>
+                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
                             </Property>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -304,9 +285,7 @@
                             <Property name="text" type="java.lang.String" value="TIME OUT"/>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-                                <BevelBorder/>
-                              </Border>
+                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
                             </Property>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">

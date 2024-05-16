@@ -45,6 +45,9 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         super(parent, modal);
         dashboard = parent;
         initComponents();
+        
+        
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(9);
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
@@ -159,6 +162,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jEndDate = new org.jdesktop.swingx.JXDatePicker();
         jStartDate = new org.jdesktop.swingx.JXDatePicker();
+        jPassword = new javax.swing.JTextField();
+        lPassword = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -188,8 +193,12 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         buttonPanel.setPreferredSize(new java.awt.Dimension(171, 60));
         buttonPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        okButton.setBackground(new java.awt.Color(51, 204, 0));
         okButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         okButton.setText("OK");
+        okButton.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        okButton.setMinimumSize(new java.awt.Dimension(100, 40));
+        okButton.setPreferredSize(new java.awt.Dimension(100, 40));
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
@@ -200,6 +209,9 @@ public class AddEmployeeModal extends javax.swing.JDialog {
 
         cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cancelButton.setText("Cancel");
+        cancelButton.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        cancelButton.setMaximumSize(new java.awt.Dimension(100, 40));
+        cancelButton.setPreferredSize(new java.awt.Dimension(100, 40));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -736,6 +748,27 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(jStartDate, gridBagConstraints);
 
+        jPassword.setColumns(20);
+        jPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jPassword.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPassword.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jPassword.setMargin(new java.awt.Insets(10, 10, 10, 10));
+        jPassword.setMinimumSize(new java.awt.Dimension(160, 32));
+        jPassword.setOpaque(true);
+        jPassword.setPreferredSize(new java.awt.Dimension(160, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 26;
+        FPosition.add(jPassword, gridBagConstraints);
+
+        lPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lPassword.setText("Password");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 24;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(lPassword, gridBagConstraints);
+
         FPositionMain.add(FPosition, java.awt.BorderLayout.CENTER);
 
         jForm.add(FPositionMain);
@@ -786,6 +819,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
         insertData();
+        
+        
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -883,6 +918,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JTextField jMiddleName;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jPassword;
     private javax.swing.JTextField jPhoneNumber;
     private javax.swing.JTextField jPositionTitle;
     private javax.swing.JTextField jPostalCode;
@@ -906,6 +942,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JLabel lGender;
     private javax.swing.JLabel lLastName;
     private javax.swing.JLabel lMiddleName;
+    private javax.swing.JLabel lPassword;
     private javax.swing.JLabel lPhoneNumber;
     private javax.swing.JLabel lPositionTitle;
     private javax.swing.JLabel lPostalCode;

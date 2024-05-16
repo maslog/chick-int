@@ -21,10 +21,11 @@ public class TimeIn extends javax.swing.JFrame {
      * Creates new form TimeInOut
      */
     public TimeIn() {
+        FlatLightLaf.setup();
         initComponents();
         
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         
         
@@ -79,14 +80,16 @@ public class TimeIn extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jTime = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 206, 0));
+        setUndecorated(true);
+        setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(255, 206, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(743, 400));
 
         jPanel2.setBackground(new java.awt.Color(248, 98, 24));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white));
+        jPanel2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanel2.setMinimumSize(new java.awt.Dimension(350, 100));
         jPanel2.setPreferredSize(new java.awt.Dimension(350, 370));
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -141,7 +144,7 @@ public class TimeIn extends javax.swing.JFrame {
 
         timeInBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         timeInBTN.setText("TIME IN");
-        timeInBTN.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        timeInBTN.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         timeInBTN.setMaximumSize(new java.awt.Dimension(200, 40));
         timeInBTN.setMinimumSize(new java.awt.Dimension(200, 40));
         timeInBTN.setPreferredSize(new java.awt.Dimension(200, 40));

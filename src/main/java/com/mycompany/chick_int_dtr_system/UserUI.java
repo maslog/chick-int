@@ -27,7 +27,7 @@ public class UserUI extends javax.swing.JFrame {
      */
     public UserUI() {
         
-        
+        FlatLightLaf.setup();
 
         initComponents();
         
@@ -80,7 +80,6 @@ public class UserUI extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         homeBTN = new javax.swing.JButton();
-        settingBTN = new javax.swing.JButton();
         hero = new javax.swing.JPanel();
         time = new javax.swing.JPanel();
         jTime = new javax.swing.JLabel();
@@ -129,17 +128,6 @@ public class UserUI extends javax.swing.JFrame {
         });
         jPanel6.add(homeBTN);
 
-        settingBTN.setBackground(new java.awt.Color(255, 206, 0));
-        settingBTN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        settingBTN.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\3844439-gear-setting-settings-wheel_110294.png")); // NOI18N
-        settingBTN.setBorderPainted(false);
-        settingBTN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingBTNActionPerformed(evt);
-            }
-        });
-        jPanel6.add(settingBTN);
-
         header.add(jPanel6, java.awt.BorderLayout.LINE_END);
 
         container.add(header, java.awt.BorderLayout.PAGE_START);
@@ -182,7 +170,7 @@ public class UserUI extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("TIME IN");
         jButton1.setToolTipText("");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setMargin(new java.awt.Insets(10, 14, 10, 14));
         jButton1.setMaximumSize(new java.awt.Dimension(400, 100));
@@ -200,7 +188,7 @@ public class UserUI extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("TIME OUT");
         jButton2.setToolTipText("");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setMargin(new java.awt.Insets(10, 14, 10, 14));
         jButton2.setMaximumSize(new java.awt.Dimension(400, 100));
@@ -319,11 +307,6 @@ public class UserUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void settingBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingBTNActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_settingBTNActionPerformed
-
     private void homeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBTNActionPerformed
         //Admin Login Button
         new AdminLogin().setVisible(true);
@@ -389,7 +372,6 @@ public class UserUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jTime;
     private javax.swing.JPanel list;
-    private javax.swing.JButton settingBTN;
     private javax.swing.JPanel time;
     private javax.swing.JPanel timeInOut;
     // End of variables declaration//GEN-END:variables

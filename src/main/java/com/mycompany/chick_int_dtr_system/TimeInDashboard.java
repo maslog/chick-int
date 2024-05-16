@@ -15,17 +15,17 @@ import javax.swing.Timer;
  *
  * @author Ronald
  */
-public class TimeOut extends javax.swing.JFrame {
+public class TimeInDashboard extends javax.swing.JFrame {
 
     /**
      * Creates new form TimeInOut
      */
-    public TimeOut() {
+    public TimeInDashboard() {
         FlatLightLaf.setup();
         initComponents();
         
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
         
         
@@ -80,9 +80,10 @@ public class TimeOut extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jTime = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 206, 0));
         setUndecorated(true);
+        setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(255, 206, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(743, 400));
@@ -126,7 +127,7 @@ public class TimeOut extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("TIME OUT");
+        jLabel1.setText("TIME IN");
         jPanel5.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jPanel5, java.awt.BorderLayout.PAGE_START);
@@ -142,7 +143,7 @@ public class TimeOut extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
 
         timeInBTN.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        timeInBTN.setText("TIME OUT");
+        timeInBTN.setText("TIME IN");
         timeInBTN.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         timeInBTN.setMaximumSize(new java.awt.Dimension(200, 40));
         timeInBTN.setMinimumSize(new java.awt.Dimension(200, 40));
@@ -277,7 +278,7 @@ public class TimeOut extends javax.swing.JFrame {
 
     private void timeInBackBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeInBackBTNActionPerformed
         // TODO add your handling code here:
-        new UserUI().setVisible(true);
+        new Dashboard().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_timeInBackBTNActionPerformed
 
@@ -298,13 +299,13 @@ public class TimeOut extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TimeOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TimeInDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TimeOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TimeInDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TimeOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TimeInDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TimeOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TimeInDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -314,7 +315,7 @@ public class TimeOut extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TimeOut().setVisible(true);
+                new TimeInDashboard().setVisible(true);
             }
         });
     }
