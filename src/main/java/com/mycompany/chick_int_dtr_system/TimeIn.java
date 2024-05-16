@@ -3,13 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.chick_int_dtr_system;
+
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
+import com.mycompany.chick_int_dtr_system.Components.Database;
 import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,15 +32,17 @@ public class TimeIn extends javax.swing.JFrame {
     /**
      * Creates new form TimeInOut
      */
+    int employee;
+    DigitalClock TimeAndDate = new DigitalClock();
+
     public TimeIn() {
         FlatLightLaf.setup();
         initComponents();
-        
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-        
-        
+
         updateTimeAndDate();
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
@@ -38,16 +52,85 @@ public class TimeIn extends javax.swing.JFrame {
         });
 
         timer.start();
-        
-        
+
     }
-    
+
     public void updateTimeAndDate() {
 
         DigitalClock upTimeAndDate = new DigitalClock();
         jTime.setText(upTimeAndDate.updateTime());
         jDate.setText(upTimeAndDate.updateDate());
 
+    }
+
+    public void checkuser() {
+        if (!userID.getText().isEmpty() && !userPassword.getText().isEmpty() && !userPassword.getText().equals(" ") && !userID.getText().equals(" ") && !userID.getText().isBlank() && !userPassword.getText().isBlank()) {
+            if (timeInForUser()) {
+                insertData();
+                new UserUI().setVisible(rootPaneCheckingEnabled);
+
+                this.dispose();
+                JOptionPane.showMessageDialog(this, "Time-In Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong Credentials!", "Warning", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Fill in the blank!", "Warning", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    
+
+    public void insertData() {
+        try {
+            String firstname = "Hello";
+            String middlename = "Hello";
+            String lastname = "Hello";
+            String timein = String.valueOf( TimeAndDate.updateTime());
+            String date = String.valueOf(TimeAndDate.updateDate());
+            Connection conn = Database.getConnection();
+            String query = "INSERT INTO `db_chick_int`.`record` (`timeIn`, `date`, `idemployee`) VALUES ('" + timein + "', '" + date + "', '" + employee + "');";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public boolean timeInForUser() {
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            String query = "SELECT `idemployee`, `password` FROM db_chick_int.employee WHERE isActive = 1";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String id = String.valueOf(rs.getString("idemployee"));
+                String pass = rs.getString("password");
+
+                if (userID.getText().equals(id) && userPassword.getText().equals(pass)) {
+                    employee = rs.getInt("idemployee");
+                    return true;
+                }
+
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
     /**
@@ -187,7 +270,6 @@ public class TimeIn extends javax.swing.JFrame {
 
         userPassword.setColumns(13);
         userPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        userPassword.setText("jPasswordField2");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -274,6 +356,7 @@ public class TimeIn extends javax.swing.JFrame {
 
     private void timeInBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeInBTNActionPerformed
         // TODO add your handling code here:
+        checkuser();
     }//GEN-LAST:event_timeInBTNActionPerformed
 
     private void timeInBackBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeInBackBTNActionPerformed

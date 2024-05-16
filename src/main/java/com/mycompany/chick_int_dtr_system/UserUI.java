@@ -6,15 +6,24 @@ package com.mycompany.chick_int_dtr_system;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
+import com.mycompany.chick_int_dtr_system.Components.Database;
 import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,12 +34,13 @@ public class UserUI extends javax.swing.JFrame {
     /**
      * Creates new form UserUI
      */
+    DigitalClock TimeAndDate = new DigitalClock();
+
     public UserUI() {
-        
+
         FlatLightLaf.setup();
 
         initComponents();
-        
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -45,7 +55,8 @@ public class UserUI extends javax.swing.JFrame {
         });
 
         timer.start();
-       
+
+        addDataToTable();
 
     }
 
@@ -58,13 +69,65 @@ public class UserUI extends javax.swing.JFrame {
 //        
 //        
 //    }
-
     public void updateTimeAndDate() {
 
         DigitalClock upTimeAndDate = new DigitalClock();
         jTime.setText(upTimeAndDate.updateTime());
         jDate.setText(upTimeAndDate.updateDate());
 
+    }
+
+    public void addDataToTable() {
+        String dateToday = String.valueOf(TimeAndDate.updateDate());
+
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+//            String query = "SELECT * FROM db_chick_int.employee WHERE isActive = 1";
+//            String query = "SELECT * FROM db_chick_int.record AS tb1 INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee WHERE tb1.timein = 12:47:03 AM ORDER BY tb1.idtime DESC ";
+            String query = "SELECT * FROM db_chick_int.record AS tb1 INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee WHERE tb1.date = '"+dateToday+"' ORDER BY tb1.idtime DESC ";
+
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            DefaultTableModel tblModel = (DefaultTableModel) jTimeTable.getModel();
+            tblModel.setRowCount(0);
+
+//            int cols = rsmd.getColumnCount();
+//            String[] colName = new String[cols];
+//            for(int i =0; i < cols; i++){
+//                colName[i] = rsmd.getColumnName(i+1);
+//            }
+//            tblModel.setColumnIdentifiers(colName);
+            String num, id, firstname, middlename, lastname, name, timein, timeout, date;
+            int no = 0;
+            while (rs.next()) {
+                id = String.valueOf(rs.getInt(1));
+                firstname = rs.getString("firstname");
+                middlename = rs.getString("middlename");
+                lastname = rs.getString("lastname");
+                timein = rs.getString("timein");
+                timeout = rs.getString("timeout");
+                date = rs.getString("date");
+
+                name = firstname + " " + middlename + " " + lastname;
+                no += 1;
+                num = String.valueOf(no);
+                System.out.println(firstname);
+                String[] data = {num, name, timein, timeout, date};
+
+                tblModel.addRow(data);
+
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -93,9 +156,8 @@ public class UserUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jList = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTimeTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1100, 800));
@@ -239,46 +301,44 @@ public class UserUI extends javax.swing.JFrame {
 
         jList.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 409, Short.MAX_VALUE)
-        );
-
-        jList.add(jPanel5);
-
         jScrollPane1.setBackground(new java.awt.Color(255, 206, 0));
-        jScrollPane1.setBorder(null);
+        jScrollPane1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
 
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTimeTable.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jTimeTable.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTimeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NAME", "TIME IN", "TIME OUT", "DATE"
+                "#", "NAME", "TIME IN", "TIME OUT", "DATE"
             }
-        ));
-        jTable1.setEnabled(false);
-        jTable1.setGridColor(new java.awt.Color(255, 206, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 206, 0));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setShowGrid(false);
-        jTable1.setShowHorizontalLines(true);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTimeTable.setEnabled(false);
+        jTimeTable.setGridColor(new java.awt.Color(51, 51, 51));
+        jTimeTable.setRowHeight(40);
+        jTimeTable.setSelectionBackground(new java.awt.Color(255, 206, 0));
+        jTimeTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTimeTable.setShowGrid(false);
+        jTimeTable.setShowHorizontalLines(true);
+        jTimeTable.getTableHeader().setResizingAllowed(false);
+        jTimeTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTimeTable);
+        if (jTimeTable.getColumnModel().getColumnCount() > 0) {
+            jTimeTable.getColumnModel().getColumn(0).setResizable(false);
+            jTimeTable.getColumnModel().getColumn(1).setResizable(false);
+            jTimeTable.getColumnModel().getColumn(2).setResizable(false);
+            jTimeTable.getColumnModel().getColumn(3).setResizable(false);
+            jTimeTable.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jList.add(jScrollPane1);
 
@@ -341,9 +401,6 @@ public class UserUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(UserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
-        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -366,11 +423,10 @@ public class UserUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jTime;
+    private javax.swing.JTable jTimeTable;
     private javax.swing.JPanel list;
     private javax.swing.JPanel time;
     private javax.swing.JPanel timeInOut;

@@ -4,7 +4,17 @@
  */
 package com.mycompany.chick_int_dtr_system;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
+import com.mycompany.chick_int_dtr_system.Components.Database;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,12 +26,55 @@ public class AdminLogin extends javax.swing.JFrame {
      * Creates new form AdminLogin
      */
     public AdminLogin() {
-        
+        FlatLightLaf.setup();
         
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+    
+    public void checkuser() {
+        if (!usernameForAdmin.getText().isEmpty() && !passwordForAdmin.getText().isEmpty() && !passwordForAdmin.getText().equals(" ") && !usernameForAdmin.getText().equals(" ") && !usernameForAdmin.getText().isBlank() && !passwordForAdmin.getText().isBlank()) {
+            if (adminLogin()) {
+                new Dashboard().setVisible(rootPaneCheckingEnabled);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong Credentials!", "Warning", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Fill in the blank!", "Warning", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    public boolean adminLogin() {
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            String query = "SELECT `username`, `password` FROM db_chick_int.admin";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String id = String.valueOf(rs.getString("username"));
+                String pass = rs.getString("password");
+
+                if (usernameForAdmin.getText().equals(id) && passwordForAdmin.getText().equals(pass)) {
+                    return true;
+                }
+
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
     /**
@@ -52,6 +105,7 @@ public class AdminLogin extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 206, 0));
 
         jPanel1.setBackground(new java.awt.Color(255, 206, 0));
+        jPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -110,7 +164,7 @@ public class AdminLogin extends javax.swing.JFrame {
 
         logibBtnAdmin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logibBtnAdmin.setText("Login");
-        logibBtnAdmin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        logibBtnAdmin.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         logibBtnAdmin.setMaximumSize(new java.awt.Dimension(200, 40));
         logibBtnAdmin.setMinimumSize(new java.awt.Dimension(200, 40));
         logibBtnAdmin.setPreferredSize(new java.awt.Dimension(200, 40));
@@ -135,6 +189,11 @@ public class AdminLogin extends javax.swing.JFrame {
 
         usernameForAdmin.setColumns(13);
         usernameForAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        usernameForAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameForAdminActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -152,7 +211,6 @@ public class AdminLogin extends javax.swing.JFrame {
 
         passwordForAdmin.setColumns(13);
         passwordForAdmin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        passwordForAdmin.setText("jPasswordField2");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -178,9 +236,13 @@ public class AdminLogin extends javax.swing.JFrame {
 
     private void logibBtnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logibBtnAdminActionPerformed
         // TODO add your handling code here:
-        new Dashboard().setVisible(rootPaneCheckingEnabled);
-        this.dispose();
+        checkuser();
+        
     }//GEN-LAST:event_logibBtnAdminActionPerformed
+
+    private void usernameForAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameForAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameForAdminActionPerformed
 
     /**
      * @param args the command line arguments

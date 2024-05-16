@@ -821,6 +821,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         insertData();
         
         
+        
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 

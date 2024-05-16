@@ -23,11 +23,30 @@ public class DigitalClock {
         return time;
 
     }
+    
+    public String getTime() {
+
+        //Get the current time and format it
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:MM:SS");
+        String time = timeFormatter.format(calendar.getTime());
+
+        return time;
+
+    }
 
     public String updateDate() {
         //Get the current date and format it
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("EE, MMM dd, yyyy");
+        String date = dateFormatter.format(calendar.getTime());
+
+        return date;
+    }
+    public String getDate() {
+        //Get the current date and format it
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY, MMM, DD");
         String date = dateFormatter.format(calendar.getTime());
 
         return date;

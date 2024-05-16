@@ -8,7 +8,9 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
 import com.mycompany.chick_int_dtr_system.Components.Database;
 import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.mysql.cj.xdevapi.Result;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -18,7 +20,9 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,14 +37,17 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         FlatLightLaf.setup();
-        
+
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-
+        ScaleImg(logo);
         addDataToTable();
+        dashboardTable();
         
+       
+
         updateTimeAndDate();
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
@@ -52,29 +59,101 @@ public class Dashboard extends javax.swing.JFrame {
         timer.start();
 
     }
+    
+    public void ScaleImg(JLabel label){
+        ImageIcon ic = (ImageIcon) label.getIcon();
+        Image scaled = ic.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(scaled));
+    }
+
+    public void updateDataToRow(Object[] dataRow) {
+        DefaultTableModel tblModel = (DefaultTableModel) jTableEmployee.getModel();
+        tblModel.addRow(dataRow);
+    }
 
     public void addDataToTable() {
         try {
 
             Connection conn = Database.getConnection();
 //          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
-            String query = "SELECT * FROM `db_chick_int`.`employee` WHERE isActive = 1";
+            String query = "SELECT `idemployee`, `firstname`,`middlename`, `lastname` FROM db_chick_int.employee WHERE isActive = 1";
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
-            while(rs.next()){
-                String id = String.valueOf(rs.getInt("idemployee"));
-                String firstname = rs.getString("firstname");
-                String middlename = rs.getString("middlename");
-                String lastname = rs.getString("lastname");
-                
-                String[] data = {id, firstname, middlename, lastname};
-                DefaultTableModel tblModel = (DefaultTableModel) jTableEmployee.getModel();
-                
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            DefaultTableModel tblModel = (DefaultTableModel) jTableEmployee.getModel();
+            tblModel.setRowCount(0);
+
+//            int cols = rsmd.getColumnCount();
+//            String[] colName = new String[cols];
+//            for(int i =0; i < cols; i++){
+//                colName[i] = rsmd.getColumnName(i+1);
+//            }
+//            tblModel.setColumnIdentifiers(colName);
+            String num, id, firstname, middlename, lastname;
+            int no = 0;
+            while (rs.next()) {
+                id = String.valueOf(rs.getInt(1));
+                firstname = rs.getString(2);
+                middlename = rs.getString(3);
+                lastname = rs.getString(4);
+                no += 1;
+                num = String.valueOf(no);
+
+                String[] data = {num, id, firstname, middlename, lastname};
+
                 tblModel.addRow(data);
-                
-                
-                
+
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void dashboardTable() {
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+//            String query = "SELECT * FROM db_chick_int.employee WHERE isActive = 1";
+            String query = "SELECT * FROM db_chick_int.record AS tb1 INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee ORDER BY tb1.idtime DESC";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            DefaultTableModel tblModel = (DefaultTableModel) jTableDashboard.getModel();
+            tblModel.setRowCount(0);
+
+//            int cols = rsmd.getColumnCount();
+//            String[] colName = new String[cols];
+//            for(int i =0; i < cols; i++){
+//                colName[i] = rsmd.getColumnName(i+1);
+//            }
+//            tblModel.setColumnIdentifiers(colName);
+            String num, id, firstname, middlename, lastname, name, timein, timeout, date;
+            int no = 0;
+            while (rs.next()) {
+                id = String.valueOf(rs.getInt("idemployee"));
+                firstname = rs.getString("firstname");
+
+                middlename = rs.getString("middlename");
+                lastname = rs.getString("lastname");
+                timein = rs.getString("timein");
+                timeout = rs.getString("timeout");
+                date = rs.getString("date");
+
+                name = firstname + " " + middlename + " " + lastname;
+                no += 1;
+                num = String.valueOf(no);
+                System.out.println(firstname);
+                String[] data = {num, id, name, timein, timeout, date};
+
+                tblModel.addRow(data);
+
             }
 
             statement.close();
@@ -106,7 +185,7 @@ public class Dashboard extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
@@ -155,16 +234,34 @@ public class Dashboard extends javax.swing.JFrame {
         header.setPreferredSize(new java.awt.Dimension(779, 150));
         header.setLayout(new java.awt.BorderLayout());
 
+        jPanel5.setBackground(new java.awt.Color(248, 103, 32));
         jPanel5.setMinimumSize(new java.awt.Dimension(200, 100));
         jPanel5.setPreferredSize(new java.awt.Dimension(200, 150));
-        jPanel5.setLayout(new java.awt.BorderLayout());
 
+        jLabel3.setBackground(new java.awt.Color(248, 103, 32));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Administrator");
-        jPanel5.add(jLabel3, java.awt.BorderLayout.PAGE_END);
+        jLabel3.setOpaque(true);
 
-        jLabel4.setText("IMAGE");
-        jPanel5.add(jLabel4, java.awt.BorderLayout.CENTER);
+        logo.setBackground(new java.awt.Color(248, 103, 32));
+        logo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\system.png")); // NOI18N
+        logo.setOpaque(true);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         header.add(jPanel5, java.awt.BorderLayout.LINE_START);
 
@@ -226,6 +323,7 @@ public class Dashboard extends javax.swing.JFrame {
         hero.setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 206, 0));
+        jTabbedPane1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jTabbedPane1.setForeground(new java.awt.Color(102, 102, 102));
         jTabbedPane1.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 18)); // NOI18N
         jTabbedPane1.setOpaque(true);
@@ -245,27 +343,28 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGap(0, 441, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jScrollPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jTableDashboard.setAutoCreateRowSorter(true);
-        jTableDashboard.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableDashboard.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTableDashboard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Name", "Time In", "Time Out", "Date"
+                "#", "ID", "Name", "Time In", "Time Out", "Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                true, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,15 +372,17 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         jTableDashboard.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableDashboard.setRowHeight(40);
+        jTableDashboard.setShowHorizontalLines(true);
         jTableDashboard.getTableHeader().setResizingAllowed(false);
         jTableDashboard.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableDashboard);
         if (jTableDashboard.getColumnModel().getColumnCount() > 0) {
-            jTableDashboard.getColumnModel().getColumn(0).setResizable(false);
             jTableDashboard.getColumnModel().getColumn(1).setResizable(false);
             jTableDashboard.getColumnModel().getColumn(2).setResizable(false);
             jTableDashboard.getColumnModel().getColumn(3).setResizable(false);
             jTableDashboard.getColumnModel().getColumn(4).setResizable(false);
+            jTableDashboard.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -390,7 +491,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGap(0, 441, Short.MAX_VALUE)
         );
 
         jSplitPane2.setLeftComponent(jPanel3);
@@ -405,7 +506,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "First Name", "Middle Name", "Last Name", "Gender", "Phone Number", "E-mail", "Position", "Action"
+                "#", "ID", "First Name", "Middle Name", "Last Name", "Gender", "Phone Number", "E-mail", "Position", "Action"
             }
         ));
         jTableEmployee.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -499,14 +600,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(reportsPaneLayout.createSequentialGroup()
                 .addGap(379, 379, 379)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1001, Short.MAX_VALUE))
+                .addContainerGap(996, Short.MAX_VALUE))
         );
         reportsPaneLayout.setVerticalGroup(
             reportsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportsPaneLayout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addComponent(jLabel7)
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reports", reportsPane);
@@ -522,14 +623,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(settingsPaneLayout.createSequentialGroup()
                 .addGap(379, 379, 379)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1000, Short.MAX_VALUE))
+                .addContainerGap(995, Short.MAX_VALUE))
         );
         settingsPaneLayout.setVerticalGroup(
             settingsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPaneLayout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jLabel8)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(301, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", settingsPane);
@@ -552,7 +653,7 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new TimeInDashboard().setVisible(rootPaneCheckingEnabled);
         this.dispose();
-        
+
     }//GEN-LAST:event_TimeInBTNActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -568,6 +669,8 @@ public class Dashboard extends javax.swing.JFrame {
     private void addEmployeeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeBTNActionPerformed
         // TODO add your handling code here:
         new AddEmployeeModal(null, true).show();
+
+        addDataToTable();
 
     }//GEN-LAST:event_addEmployeeBTNActionPerformed
 
@@ -622,7 +725,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -652,6 +754,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable jTableEmployee;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel logo;
     private javax.swing.JPanel reportsPane;
     private javax.swing.JPanel settingsPane;
     // End of variables declaration//GEN-END:variables
