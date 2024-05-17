@@ -45,8 +45,6 @@ public class Dashboard extends javax.swing.JFrame {
         ScaleImg(logo);
         addDataToTable();
         dashboardTable();
-        
-       
 
         updateTimeAndDate();
         Timer timer = new Timer(1000, new ActionListener() {
@@ -59,8 +57,8 @@ public class Dashboard extends javax.swing.JFrame {
         timer.start();
 
     }
-    
-    public void ScaleImg(JLabel label){
+
+    public void ScaleImg(JLabel label) {
         ImageIcon ic = (ImageIcon) label.getIcon();
         Image scaled = ic.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), Image.SCALE_SMOOTH);
         label.setIcon(new ImageIcon(scaled));
@@ -76,7 +74,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             Connection conn = Database.getConnection();
 //          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
-            String query = "SELECT `idemployee`, `firstname`,`middlename`, `lastname` FROM db_chick_int.employee WHERE isActive = 1";
+            String query = "SELECT * FROM db_chick_int.employee WHERE isActive = 1";
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(query);
 
@@ -90,18 +88,24 @@ public class Dashboard extends javax.swing.JFrame {
 //                colName[i] = rsmd.getColumnName(i+1);
 //            }
 //            tblModel.setColumnIdentifiers(colName);
-            String num, id, firstname, middlename, lastname;
+            String num, id, firstname, middlename, lastname, gender, pNumber, email, position;
             int no = 0;
             while (rs.next()) {
                 id = String.valueOf(rs.getInt(1));
                 firstname = rs.getString(2);
                 middlename = rs.getString(3);
                 lastname = rs.getString(4);
+                gender = rs.getString("gender");
+                email = rs.getString("email");
+                pNumber = rs.getString("phoneNumber");
+                position = rs.getString("positionTitle");
+
                 no += 1;
                 num = String.valueOf(no);
 
-                String[] data = {num, id, firstname, middlename, lastname};
-
+                String[] data = {num, id, firstname, middlename, lastname, gender, pNumber, email};
+                jCardEmployee.setText("EMPLOYEES = " + num);
+                jCardEmployee2.setText("EMPLOYEES = " + num);
                 tblModel.addRow(data);
 
             }
@@ -151,7 +155,48 @@ public class Dashboard extends javax.swing.JFrame {
                 num = String.valueOf(no);
                 System.out.println(firstname);
                 String[] data = {num, id, name, timein, timeout, date};
+                jCardEmployee1.setText("RECORDS = " + num);
+                jCardEmployee3.setText("RECORDS = " + num);
+                tblModel.addRow(data);
 
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void search() {
+        try {
+
+            Connection conn = Database.getConnection();
+            String query = "SELECT * FROM db_chick_int.employee WHERE isActive = 1 AND firstname LIKE  %ron%";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            DefaultTableModel tblModel = (DefaultTableModel) jTableDashboard.getModel();
+            tblModel.setRowCount(0);
+
+            String num, id, firstname, middlename, lastname, gender, pNumber, email, position;
+            int no = 0;
+            while (rs.next()) {
+                id = String.valueOf(rs.getInt(1));
+                firstname = rs.getString(2);
+                middlename = rs.getString(3);
+                lastname = rs.getString(4);
+                gender = rs.getString("gender");
+                email = rs.getString("email");
+                pNumber = rs.getString("phoneNumber");
+                position = rs.getString("positionTitle");
+
+                no += 1;
+                num = String.valueOf(no);
+
+                String[] data = {num, id, firstname, middlename, lastname, gender, pNumber, email};
                 tblModel.addRow(data);
 
             }
@@ -207,7 +252,12 @@ public class Dashboard extends javax.swing.JFrame {
         TimeOutBTN = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jSearchDashboard = new javax.swing.JTextField();
+        cards = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jCardEmployee = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jCardEmployee1 = new javax.swing.JLabel();
         employeePane = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel3 = new javax.swing.JPanel();
@@ -220,7 +270,12 @@ public class Dashboard extends javax.swing.JFrame {
         addEmployeeBTN = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jSearchEmployee = new javax.swing.JTextField();
+        cards1 = new javax.swing.JPanel();
+        jPanel19 = new javax.swing.JPanel();
+        jCardEmployee2 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        jCardEmployee3 = new javax.swing.JLabel();
         reportsPane = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         settingsPane = new javax.swing.JPanel();
@@ -312,7 +367,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         header.add(jPanel8, java.awt.BorderLayout.SOUTH);
@@ -329,7 +384,7 @@ public class Dashboard extends javax.swing.JFrame {
         jTabbedPane1.setOpaque(true);
 
         dashboardPane.setBackground(new java.awt.Color(255, 206, 0));
-        dashboardPane.setLayout(new java.awt.BorderLayout());
+        dashboardPane.setLayout(new javax.swing.BoxLayout(dashboardPane, javax.swing.BoxLayout.LINE_AXIS));
 
         jSplitPane1.setDividerLocation(300);
 
@@ -343,7 +398,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -399,8 +454,8 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel9.setLayout(new java.awt.BorderLayout());
 
         jPanel10.setBackground(new java.awt.Color(255, 206, 0));
-        jPanel10.setMinimumSize(new java.awt.Dimension(250, 100));
-        jPanel10.setPreferredSize(new java.awt.Dimension(250, 100));
+        jPanel10.setMinimumSize(new java.awt.Dimension(300, 100));
+        jPanel10.setPreferredSize(new java.awt.Dimension(300, 100));
         java.awt.GridBagLayout jPanel10Layout = new java.awt.GridBagLayout();
         jPanel10Layout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0};
         jPanel10Layout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -455,24 +510,68 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5.setText("Search:");
         jPanel11.add(jLabel5);
 
-        jTextField1.setColumns(20);
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jSearchDashboard.setColumns(20);
+        jSearchDashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jSearchDashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jSearchDashboardActionPerformed(evt);
             }
         });
-        jPanel11.add(jTextField1);
+        jPanel11.add(jSearchDashboard);
 
         jPanel9.add(jPanel11, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jPanel9, java.awt.BorderLayout.SOUTH);
 
+        cards.setBackground(new java.awt.Color(255, 206, 0));
+        java.awt.GridBagLayout cardsLayout = new java.awt.GridBagLayout();
+        cardsLayout.columnWidths = new int[] {0, 25, 0};
+        cardsLayout.rowHeights = new int[] {0};
+        cards.setLayout(cardsLayout);
+
+        jPanel17.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel17.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel17.setLayout(new java.awt.BorderLayout());
+
+        jCardEmployee.setBackground(new java.awt.Color(153, 204, 255));
+        jCardEmployee.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jCardEmployee.setForeground(new java.awt.Color(102, 102, 102));
+        jCardEmployee.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCardEmployee.setText(" EMPLOYEES = 0");
+        jCardEmployee.setMinimumSize(new java.awt.Dimension(300, 80));
+        jCardEmployee.setPreferredSize(new java.awt.Dimension(300, 80));
+        jPanel17.add(jCardEmployee, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        cards.add(jPanel17, gridBagConstraints);
+
+        jPanel18.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel18.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel18.setLayout(new java.awt.BorderLayout());
+
+        jCardEmployee1.setBackground(new java.awt.Color(255, 255, 204));
+        jCardEmployee1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jCardEmployee1.setForeground(new java.awt.Color(102, 102, 102));
+        jCardEmployee1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCardEmployee1.setText(" RECORD = 0");
+        jCardEmployee1.setMinimumSize(new java.awt.Dimension(300, 80));
+        jCardEmployee1.setPreferredSize(new java.awt.Dimension(300, 80));
+        jPanel18.add(jCardEmployee1, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        cards.add(jPanel18, gridBagConstraints);
+
+        jPanel4.add(cards, java.awt.BorderLayout.CENTER);
+
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
         jSplitPane1.setRightComponent(jPanel2);
 
-        dashboardPane.add(jSplitPane1, java.awt.BorderLayout.CENTER);
+        dashboardPane.add(jSplitPane1);
 
         jTabbedPane1.addTab("Dashboard", dashboardPane);
 
@@ -491,7 +590,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
 
         jSplitPane2.setLeftComponent(jPanel3);
@@ -506,7 +605,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "#", "ID", "First Name", "Middle Name", "Last Name", "Gender", "Phone Number", "E-mail", "Position", "Action"
+                "#", "ID", "First Name", "Middle Name", "Last Name", "Gender", "Phone Number", "E-mail", "Action"
             }
         ));
         jTableEmployee.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -568,18 +667,67 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel9.setText("Search:");
         jPanel16.add(jLabel9);
 
-        jTextField2.setColumns(20);
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jSearchEmployee.setColumns(20);
+        jSearchEmployee.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jSearchEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jSearchEmployeeActionPerformed(evt);
             }
         });
-        jPanel16.add(jTextField2);
+        jSearchEmployee.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jSearchEmployeeKeyTyped(evt);
+            }
+        });
+        jPanel16.add(jSearchEmployee);
 
         jPanel14.add(jPanel16, java.awt.BorderLayout.CENTER);
 
         jPanel13.add(jPanel14, java.awt.BorderLayout.SOUTH);
+
+        cards1.setBackground(new java.awt.Color(255, 206, 0));
+        java.awt.GridBagLayout cards1Layout = new java.awt.GridBagLayout();
+        cards1Layout.columnWidths = new int[] {0, 25, 0};
+        cards1Layout.rowHeights = new int[] {0};
+        cards1.setLayout(cards1Layout);
+
+        jPanel19.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel19.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel19.setLayout(new java.awt.BorderLayout());
+
+        jCardEmployee2.setBackground(new java.awt.Color(153, 204, 255));
+        jCardEmployee2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jCardEmployee2.setForeground(new java.awt.Color(102, 102, 102));
+        jCardEmployee2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCardEmployee2.setText(" EMPLOYEES = 0");
+        jCardEmployee2.setMinimumSize(new java.awt.Dimension(300, 80));
+        jCardEmployee2.setPreferredSize(new java.awt.Dimension(300, 80));
+        jPanel19.add(jCardEmployee2, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        cards1.add(jPanel19, gridBagConstraints);
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel20.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel20.setLayout(new java.awt.BorderLayout());
+
+        jCardEmployee3.setBackground(new java.awt.Color(255, 255, 204));
+        jCardEmployee3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jCardEmployee3.setForeground(new java.awt.Color(102, 102, 102));
+        jCardEmployee3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCardEmployee3.setText(" RECORD = 0");
+        jCardEmployee3.setMinimumSize(new java.awt.Dimension(300, 80));
+        jCardEmployee3.setPreferredSize(new java.awt.Dimension(300, 80));
+        jPanel20.add(jCardEmployee3, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        cards1.add(jPanel20, gridBagConstraints);
+
+        jPanel13.add(cards1, java.awt.BorderLayout.CENTER);
 
         jPanel12.add(jPanel13, java.awt.BorderLayout.PAGE_START);
 
@@ -607,7 +755,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(reportsPaneLayout.createSequentialGroup()
                 .addGap(144, 144, 144)
                 .addComponent(jLabel7)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(421, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reports", reportsPane);
@@ -630,16 +778,16 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(settingsPaneLayout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jLabel8)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(441, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Settings", settingsPane);
 
-        hero.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        hero.add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(hero, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(1500, 636));
+        setSize(new java.awt.Dimension(1500, 602));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -662,9 +810,9 @@ public class Dashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jSearchDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchDashboardActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jSearchDashboardActionPerformed
 
     private void addEmployeeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeBTNActionPerformed
         // TODO add your handling code here:
@@ -677,6 +825,15 @@ public class Dashboard extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jSearchEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchEmployeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSearchEmployeeActionPerformed
+
+    private void jSearchEmployeeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchEmployeeKeyTyped
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jSearchEmployeeKeyTyped
 
     /**
      * @param args the command line arguments
@@ -692,16 +849,24 @@ public class Dashboard extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Dashboard.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -717,11 +882,17 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton TimeInBTN;
     private javax.swing.JButton TimeOutBTN;
     private javax.swing.JButton addEmployeeBTN;
+    private javax.swing.JPanel cards;
+    private javax.swing.JPanel cards1;
     private javax.swing.JPanel dashboardPane;
     private javax.swing.JPanel employeePane;
     private javax.swing.JPanel header;
     private javax.swing.JPanel hero;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jCardEmployee;
+    private javax.swing.JLabel jCardEmployee1;
+    private javax.swing.JLabel jCardEmployee2;
+    private javax.swing.JLabel jCardEmployee3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -737,7 +908,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -747,13 +922,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jSearchDashboard;
+    private javax.swing.JTextField jSearchEmployee;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableDashboard;
     private javax.swing.JTable jTableEmployee;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel reportsPane;
     private javax.swing.JPanel settingsPane;

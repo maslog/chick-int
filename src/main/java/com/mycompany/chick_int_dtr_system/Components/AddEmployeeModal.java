@@ -7,6 +7,7 @@ package com.mycompany.chick_int_dtr_system.Components;
 import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_CANCEL;
 import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_OK;
 import com.mycompany.chick_int_dtr_system.Dashboard;
+import com.mycompany.chick_int_dtr_system.UserUI;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 /**
@@ -45,8 +47,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         super(parent, modal);
         dashboard = parent;
         initComponents();
-        
-        
+
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(9);
 
         // Close the dialog when Esc is pressed
@@ -61,16 +62,54 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         });
     }
 
+    public void checkuser() {
+        if (!jFirstName.getText().isEmpty() && !jMiddleName.getText().isEmpty() && !jMiddleName.getText().equals(" ") && !jFirstName.getText().equals(" ") && !jFirstName.getText().isBlank() && !jMiddleName.getText().isBlank()
+                && !jLastName.getText().isEmpty() && !jAge.getText().isEmpty() && !jAge.getText().equals(" ") && !jLastName.getText().equals(" ") && !jLastName.getText().isBlank() && !jAge.getText().isBlank()
+                && !jGender.getText().isEmpty() && !jBirth.getDate().toString().isEmpty() && !jBirth.getDate().toString().equals(" ") && !jGender.getText().equals(" ") && !jGender.getText().isBlank() && !jBirth.getDate().toString().isBlank()
+                && !jStreetAddress.getText().isEmpty() && !jCity.getText().isEmpty() && !jCity.getText().equals(" ") && !jStreetAddress.getText().equals(" ") && !jStreetAddress.getText().isBlank() && !jCity.getText().isBlank()
+                && !jPostalCode.getText().isEmpty() && !jRegion.getText().isEmpty() && !jRegion.getText().equals(" ") && !jPostalCode.getText().equals(" ") && !jPostalCode.getText().isBlank() && !jRegion.getText().isBlank()
+                && !jPhoneNumber.getText().isEmpty() && !jEmail.getText().isEmpty() && !jEmail.getText().equals(" ") && !jPhoneNumber.getText().equals(" ") && !jPhoneNumber.getText().isBlank() && !jEmail.getText().isBlank()
+                && !jEmergencyName.getText().isEmpty() && !jEmergencyNumber.getText().isEmpty() && !jEmergencyNumber.getText().equals(" ") && !jEmergencyName.getText().equals(" ") && !jEmergencyName.getText().isBlank() && !jEmergencyNumber.getText().isBlank()
+                && !jEmploymentType.getText().isEmpty() && !jPositionTitle.getText().isEmpty() && !jPositionTitle.getText().equals(" ") && !jEmploymentType.getText().equals(" ") && !jEmploymentType.getText().isBlank() && !jPositionTitle.getText().isBlank()
+                && !jPassword.getText().isEmpty() && !jStartDate.getDate().toString().isEmpty() && !jStartDate.getDate().toString().equals(" ") && !jPassword.getText().equals(" ") && !jPassword.getText().isBlank() && !jStartDate.getDate().toString().isBlank()
+                && !jEndDate.getDate().toString().isEmpty() && !jEndDate.getDate().toString().equals(" ") && !jEndDate.getDate().toString().isBlank()) {
+insertData();
+            JOptionPane.showMessageDialog(this, "Added Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Fill in the blank!", "Warning", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
     public void insertData() {
         try {
             String firstname = jFirstName.getText();
             String middlename = jMiddleName.getText();
             String lastname = jLastName.getText();
+            int age = Integer.parseInt(jAge.getText());
+            String gender = jGender.getText();
+            String birth = String.valueOf(jBirth.getDate());
+            String street = jStreetAddress.getText();
+            String city = jCity.getText();
+            String region = jRegion.getText();
+            String postal = jPostalCode.getText();
+            String pNumber = jPhoneNumber.getText();
+            String email = jEmail.getText();
+            String eName = jEmergencyName.getText();
+            String eNum = jEmergencyNumber.getText();
+            String pTitle = jPositionTitle.getText();
+            String emType = jEmploymentType.getText();
+            String sTime = String.valueOf(jStartDate.getDate());
+            String eTime = String.valueOf(jEndDate.getDate());
+            String pass = jPassword.getText();
 
             Connection conn = Database.getConnection();
-            String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            //String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+            String query2 = "INSERT INTO `db_chick_int`.`employee` ( `firstname`, `middlename`, `lastname`, `age`, `gender`, `birthdate`, `streetAdress`, `city`, `region`, `postalCode`, `phoneNumber`, `email`, `emergencyName`, `emergencyNumber`, `positionTitle`, `employmentType`, `startDate`, `endDate`,   `password`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "', " + age + ", '" + gender + "', '" + birth + "', '" + street + "', '" + city + "', '" + region + "', '" + postal + "', '" + pNumber + "', '" + email + "', '" + eName + "', '" + eNum + "', '" + pTitle + "', '" + emType + "', '" + sTime + "', '" + eTime + "', '" + pass + "')";
+
             Statement statement = conn.createStatement();
-            statement.execute(query);
+            statement.execute(query2);
 
             statement.close();
 
@@ -80,8 +119,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         }
 
     }
-    
-    
 
     /**
      * @return the return status of this dialog - one of RET_OK or RET_CANCEL
@@ -818,10 +855,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        insertData();
-        
-        
-        
+        checkuser();
+
         doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
 
