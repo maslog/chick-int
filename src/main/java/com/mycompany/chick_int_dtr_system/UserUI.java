@@ -45,7 +45,10 @@ public class UserUI extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
-
+        
+        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\440964081_363357396210951_7696104280231318921_n.png");
+        this.setIconImage(icon.getImage());
+        
         updateTimeAndDate();
         Timer timer = new Timer(1000, new ActionListener() {
             @Override
@@ -160,6 +163,7 @@ public class UserUI extends javax.swing.JFrame {
         jTimeTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chick-Int");
         setSize(new java.awt.Dimension(1100, 800));
 
         container.setBackground(new java.awt.Color(255, 255, 255));
@@ -322,11 +326,13 @@ public class UserUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTimeTable.setEnabled(false);
         jTimeTable.setGridColor(new java.awt.Color(51, 51, 51));
         jTimeTable.setRowHeight(40);
+        jTimeTable.setRowSelectionAllowed(true);
         jTimeTable.setSelectionBackground(new java.awt.Color(255, 206, 0));
         jTimeTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTimeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTimeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTimeTable.setShowGrid(false);
         jTimeTable.setShowHorizontalLines(true);
         jTimeTable.getTableHeader().setResizingAllowed(false);
@@ -431,4 +437,8 @@ public class UserUI extends javax.swing.JFrame {
     private javax.swing.JPanel time;
     private javax.swing.JPanel timeInOut;
     // End of variables declaration//GEN-END:variables
+
+    private ImageIcon ImageIcon(String cUsersRonaldDocumentsNetBeansProjectsChic) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

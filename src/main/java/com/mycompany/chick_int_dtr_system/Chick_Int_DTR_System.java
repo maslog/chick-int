@@ -5,6 +5,7 @@ package com.mycompany.chick_int_dtr_system;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 /**
@@ -14,9 +15,13 @@ import javax.swing.UIManager;
 public class Chick_Int_DTR_System {
 
     public static void main(String[] args) {
+        
         FlatLightLaf.setup();
         
         new UserUI().setVisible(true);
+       
+        
+        
         
     }
 }

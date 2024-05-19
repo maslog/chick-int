@@ -1,36 +1,38 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/OkCancelDialog.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.mycompany.chick_int_dtr_system.Components;
 
-import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_CANCEL;
-import static com.mycompany.chick_int_dtr_system.Components.NewOkCancelDialog.RET_OK;
-import com.mycompany.chick_int_dtr_system.Dashboard;
-import com.mycompany.chick_int_dtr_system.UserUI;
-import java.awt.Image;
+import com.formdev.flatlaf.FlatLightLaf;
+import static com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal.RET_CANCEL;
+import static com.mycompany.chick_int_dtr_system.Components.UpdateEmployeeModal.RET_OK;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Ronald
  */
-public class AddEmployeeModal extends javax.swing.JDialog {
+public class updateEmployee extends javax.swing.JDialog {
 
-    private Dashboard dashboard;
+    /**
+     * Creates new form updateEmployee
+     */
     /**
      * A return status code - returned if Cancel button has been pressed
      */
@@ -39,19 +41,16 @@ public class AddEmployeeModal extends javax.swing.JDialog {
      * A return status code - returned if OK button has been pressed
      */
     public static final int RET_OK = 1;
+    String idemp;
 
-    /**
-     * Creates new form AddEmployeeModal
-     */
-    public AddEmployeeModal(com.mycompany.chick_int_dtr_system.Dashboard parent, boolean modal) {
+    public updateEmployee(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        dashboard = parent;
+        FlatLightLaf.setup();
         initComponents();
-
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(9);
         
-        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\440964081_363357396210951_7696104280231318921_n.png");
-        this.setIconImage(icon.getImage());
+        
+        
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -62,9 +61,13 @@ public class AddEmployeeModal extends javax.swing.JDialog {
                 doClose(RET_CANCEL);
             }
         });
+
     }
 
-    public void checkuser() {
+    
+
+    public void checkuser(String idEmp) {
+        idemp = idEmp;
         if (!jFirstName.getText().isEmpty() && !jMiddleName.getText().isEmpty() && !jMiddleName.getText().equals(" ") && !jFirstName.getText().equals(" ") && !jFirstName.getText().isBlank() && !jMiddleName.getText().isBlank()
                 && !jLastName.getText().isEmpty() && !jAge.getText().isEmpty() && !jAge.getText().equals(" ") && !jLastName.getText().equals(" ") && !jLastName.getText().isBlank() && !jAge.getText().isBlank()
                 && !jGender.getText().isEmpty() && !jBirth.getDate().toString().isEmpty() && !jBirth.getDate().toString().equals(" ") && !jGender.getText().equals(" ") && !jGender.getText().isBlank() && !jBirth.getDate().toString().isBlank()
@@ -74,17 +77,64 @@ public class AddEmployeeModal extends javax.swing.JDialog {
                 && !jEmergencyName.getText().isEmpty() && !jEmergencyNumber.getText().isEmpty() && !jEmergencyNumber.getText().equals(" ") && !jEmergencyName.getText().equals(" ") && !jEmergencyName.getText().isBlank() && !jEmergencyNumber.getText().isBlank()
                 && !jEmploymentType.getText().isEmpty() && !jPositionTitle.getText().isEmpty() && !jPositionTitle.getText().equals(" ") && !jEmploymentType.getText().equals(" ") && !jEmploymentType.getText().isBlank() && !jPositionTitle.getText().isBlank()
                 && !jPassword.getText().isEmpty() && !jPassword.getText().equals(" ") && !jPassword.getText().isBlank()) {
-            insertData();
-            doClose(RET_OK);
-            JOptionPane.showMessageDialog(this, "Added Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
+            updateData(idEmp);
         } else {
             JOptionPane.showMessageDialog(null, "Fill in the blank!", "Warning", JOptionPane.ERROR_MESSAGE);
 
         }
     }
 
-    public void insertData() {
+    public void selectData() {
+        try {
+
+            Connection conn = Database.getConnection();
+            String query = "SELECT * FROM db_chick_int.employee WHERE idemployee = " + 1;
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+
+//            String firstname = rs.getString("firstname");
+//            jFirstName.setText(firstname);
+            int i = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete? " , "Delete Data", JOptionPane.YES_NO_OPTION);
+            String firstname = jFirstName.getText();
+            String middlename = jMiddleName.getText();
+            String lastname = jLastName.getText();
+            int age = Integer.parseInt(jAge.getText());
+            String gender = jGender.getText();
+            String birth = String.valueOf(jBirth.getDate());
+            String street = jStreetAddress.getText();
+            String city = jCity.getText();
+            String region = jRegion.getText();
+            String postal = jPostalCode.getText();
+            String pNumber = jPhoneNumber.getText();
+            String email = jEmail.getText();
+            String eName = jEmergencyName.getText();
+            String eNum = jEmergencyNumber.getText();
+            String pTitle = jPositionTitle.getText();
+            String emType = jEmploymentType.getText();
+
+//            String num, id, firstname, middlename, lastname, gender, pNumber, email, position;
+//            int no = 0;
+//            while (rs.next()) {
+//                id = String.valueOf(rs.getInt(1));
+//                firstname = rs.getString(2);
+//                middlename = rs.getString(3);
+//                lastname = rs.getString(4);
+//                gender = rs.getString("gender");
+//                email = rs.getString("email");
+//                pNumber = rs.getString("phoneNumber");
+//                position = rs.getString("positionTitle");
+//            }
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateData(String id) {
         try {
             String firstname = jFirstName.getText();
             String middlename = jMiddleName.getText();
@@ -105,27 +155,46 @@ public class AddEmployeeModal extends javax.swing.JDialog {
 
             String pass = jPassword.getText();
 
-            Connection conn = Database.getConnection();
-            //String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
-            String query2 = "INSERT INTO `db_chick_int`.`employee` ( `firstname`, `middlename`, `lastname`, `age`, `gender`, `birthdate`, `streetAddress`, `city`, `region`, `postalCode`, `phoneNumber`, `email`, `emergencyName`, `emergencyNumber`, `positionTitle`, `employmentType`, `password`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "', " + age + ", '" + gender + "', '" + birth + "', '" + street + "', '" + city + "', '" + region + "', '" + postal + "', '" + pNumber + "', '" + email + "', '" + eName + "', '" + eNum + "', '" + pTitle + "', '" + emType + "', '" + pass + "')";
+            String idemp = id;
 
-            Statement statement = conn.createStatement();
-            statement.execute(query2);
+            int i = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete " + id + "?", "Delete Data", JOptionPane.YES_NO_OPTION);
 
-            statement.close();
+            if (i == 0) {
+                Connection conn = Database.getConnection();
+                //String query = "INSERT INTO `db_chick_int`.`record` (`timeIn`, `date`, `idemployee`) VALUES ('" + timein + "', '" + date + "', '" + employee + "');";
+                //String query = "UPDATE `record` SET `timeout` = '"+timeToday+"' WHERE `record`.`idtime` = 1 AND `record`.`date` = '"++"' AND  `record`.`timeout` = '0'  " ;
 
-            Database.closeConnection();
+                String query = "UPDATE `db_chick_int`.`employee` SET `employee`.`isActive` = 0 WHERE `employee`.`idemployee` =" + id;
+                String query2 = "UPDATE `db_chick_int`.`employee` SET "
+                        + "`employee`.`firstname` = '" + firstname + "', "
+                        + "`employee`.`middlename` = '" + middlename + "', "
+                        + "`employee`.`lastname` = '" + lastname + "', "
+                        + "`employee`.`age` = " + age + ", "
+                        + "`employee`.`gender` = '" + gender + "', "
+                        + "`employee`.`birthdate` = '" + birth + "', "
+                        + "`employee`.`streetAdress` = '" + street + "', "
+                        + "`employee`.`city` = '" + city + "', "
+                        + "`employee`.`region` = '" + region + "', "
+                        + "`employee`.`postalCode` = '" + postal + "', "
+                        + "`employee`.`phoneNumber` = '" + pNumber + "', "
+                        + "`employee`.`email` = '" + email + "', "
+                        + "`employee`.`emergencyName` = '" + eName + "', "
+                        + "`employee`.`emergencyNumber` = '" + eNum + "', "
+                        + "`employee`.`positionTitle` = '" + pTitle + "', "
+                        + "`employee`.`employmentType` = '" + emType + "', "
+                        + "`employee`.`password` = '" + pass + "' "
+                        + "WHERE `employee`.`idemployee` = " + idemp;
+
+                Statement statement = conn.createStatement();
+                statement.execute(query);
+
+                statement.close();
+                Database.closeConnection();
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
-
-    /**
-     * @return the return status of this dialog - one of RET_OK or RET_CANCEL
-     */
-    public int getReturnStatus() {
-        return returnStatus;
     }
 
     /**
@@ -138,7 +207,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         buttonPanel = new javax.swing.JPanel();
@@ -203,24 +271,17 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Chick-Int");
-        setMinimumSize(new java.awt.Dimension(600, 700));
-        setPreferredSize(new java.awt.Dimension(600, 700));
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                closeDialog(evt);
-            }
-        });
+        setMinimumSize(new java.awt.Dimension(600, 600));
+        setPreferredSize(new java.awt.Dimension(600, 600));
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(null);
         jScrollPane2.setAutoscrolls(true);
-        jScrollPane2.setMinimumSize(new java.awt.Dimension(500, 800));
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(500, 800));
+        jScrollPane2.setMinimumSize(new java.awt.Dimension(500, 600));
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(500, 600));
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(500, 1000));
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 1000));
+        jPanel1.setMinimumSize(new java.awt.Dimension(500, 900));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 900));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         buttonPanel.setBackground(new java.awt.Color(255, 206, 0));
@@ -257,8 +318,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPanel1.add(buttonPanel, java.awt.BorderLayout.PAGE_END);
 
         main.setBackground(new java.awt.Color(255, 206, 0));
-        main.setMinimumSize(new java.awt.Dimension(500, 500));
-        main.setPreferredSize(new java.awt.Dimension(500, 500));
+        main.setMinimumSize(new java.awt.Dimension(500, 100));
+        main.setPreferredSize(new java.awt.Dimension(500, 100));
         main.setLayout(new java.awt.BorderLayout());
 
         jForm.setBackground(new java.awt.Color(255, 206, 0));
@@ -271,10 +332,10 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FNameMain.setLayout(new java.awt.BorderLayout());
 
         FName.setBackground(new java.awt.Color(255, 206, 0));
-        java.awt.GridBagLayout FNameLayout1 = new java.awt.GridBagLayout();
-        FNameLayout1.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
-        FNameLayout1.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0};
-        FName.setLayout(FNameLayout1);
+        java.awt.GridBagLayout FNameLayout = new java.awt.GridBagLayout();
+        FNameLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        FNameLayout.rowHeights = new int[] {0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0};
+        FName.setLayout(FNameLayout);
 
         jFirstName.setColumns(12);
         jFirstName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -286,14 +347,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jFirstName.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         FName.add(jFirstName, gridBagConstraints);
 
         lFirstName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lFirstName.setText("First Name");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FName.add(lFirstName, gridBagConstraints);
 
@@ -306,15 +367,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jMiddleName.setOpaque(true);
         jMiddleName.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 12;
         FName.add(jMiddleName, gridBagConstraints);
 
         lMiddleName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lMiddleName.setText("Middle Name");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FName.add(lMiddleName, gridBagConstraints);
 
@@ -327,15 +388,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jLastName.setOpaque(true);
         jLastName.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 12;
         FName.add(jLastName, gridBagConstraints);
 
         lLastName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lLastName.setText("Last Name");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FName.add(lLastName, gridBagConstraints);
 
@@ -345,7 +406,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FName.add(jLabel1, gridBagConstraints);
 
@@ -357,8 +418,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FGenderAgeBirthMain.setMinimumSize(new java.awt.Dimension(600, 100));
         FGenderAgeBirthMain.setPreferredSize(new java.awt.Dimension(600, 100));
         java.awt.GridBagLayout FGenderAgeBirthMainLayout = new java.awt.GridBagLayout();
-        FGenderAgeBirthMainLayout.columnWidths = new int[] {0, 13, 0, 13, 0, 13, 0, 13, 0, 13, 0};
-        FGenderAgeBirthMainLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        FGenderAgeBirthMainLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        FGenderAgeBirthMainLayout.rowHeights = new int[] {0, 3, 0, 3, 0};
         FGenderAgeBirthMain.setLayout(FGenderAgeBirthMainLayout);
 
         jGender.setColumns(12);
@@ -371,7 +432,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jGender.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         FGenderAgeBirthMain.add(jGender, gridBagConstraints);
 
         lGender.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -391,14 +452,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jAge.setOpaque(true);
         jAge.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
         FGenderAgeBirthMain.add(jAge, gridBagConstraints);
 
         lAge.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lAge.setText("Age");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FGenderAgeBirthMain.add(lAge, gridBagConstraints);
@@ -406,7 +467,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lBirth.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lBirth.setText("Birth Date");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridx = 16;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FGenderAgeBirthMain.add(lBirth, gridBagConstraints);
@@ -414,8 +475,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jBirth.setMinimumSize(new java.awt.Dimension(160, 32));
         jBirth.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 4;
         FGenderAgeBirthMain.add(jBirth, gridBagConstraints);
 
         jForm.add(FGenderAgeBirthMain);
@@ -434,8 +495,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FAddess.setMinimumSize(new java.awt.Dimension(296, 300));
         FAddess.setPreferredSize(new java.awt.Dimension(296, 300));
         java.awt.GridBagLayout FAddessLayout = new java.awt.GridBagLayout();
-        FAddessLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        FAddessLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
+        FAddessLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        FAddessLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         FAddess.setLayout(FAddessLayout);
 
         jStreetAddress.setColumns(20);
@@ -446,9 +507,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jStreetAddress.setMinimumSize(new java.awt.Dimension(160, 32));
         jStreetAddress.setOpaque(true);
         jStreetAddress.setPreferredSize(new java.awt.Dimension(160, 32));
+        jStreetAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStreetAddressActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FAddess.add(jStreetAddress, gridBagConstraints);
 
@@ -456,7 +522,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lStreet.setText("Street Address");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FAddess.add(lStreet, gridBagConstraints);
 
@@ -469,15 +535,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jCity.setOpaque(true);
         jCity.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 12;
         FAddess.add(jCity, gridBagConstraints);
 
         lCity.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lCity.setText("City");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FAddess.add(lCity, gridBagConstraints);
 
@@ -491,14 +557,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jRegion.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 24;
         FAddess.add(jRegion, gridBagConstraints);
 
         lRegion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lRegion.setText("Region");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FAddess.add(lRegion, gridBagConstraints);
 
@@ -525,15 +591,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 24;
         FAddess.add(jPostalCode, gridBagConstraints);
 
         lPostalCode.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lPostalCode.setText("Postal Code");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FAddess.add(lPostalCode, gridBagConstraints);
 
@@ -555,8 +621,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FContact.setMinimumSize(new java.awt.Dimension(296, 300));
         FContact.setPreferredSize(new java.awt.Dimension(296, 300));
         java.awt.GridBagLayout FContactLayout = new java.awt.GridBagLayout();
-        FContactLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        FContactLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
+        FContactLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0};
+        FContactLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         FContact.setLayout(FContactLayout);
 
         jPhoneNumber.setColumns(20);
@@ -569,7 +635,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPhoneNumber.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FContact.add(jPhoneNumber, gridBagConstraints);
 
@@ -577,7 +643,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lPhoneNumber.setText("Phone Number");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FContact.add(lPhoneNumber, gridBagConstraints);
 
@@ -590,15 +656,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmail.setOpaque(true);
         jEmail.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 12;
         FContact.add(jEmail, gridBagConstraints);
 
         lEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmail.setText("E-mail");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FContact.add(lEmail, gridBagConstraints);
 
@@ -612,14 +678,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmergencyName.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 24;
         FContact.add(jEmergencyName, gridBagConstraints);
 
         lEmergencyName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmergencyName.setText("Emergency Contact Name");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FContact.add(lEmergencyName, gridBagConstraints);
 
@@ -641,15 +707,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmergencyNumber.setOpaque(true);
         jEmergencyNumber.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 24;
         FContact.add(jEmergencyNumber, gridBagConstraints);
 
         lEmergencyNumber.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmergencyNumber.setText("Emergency Contact  Number");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FContact.add(lEmergencyNumber, gridBagConstraints);
 
@@ -663,16 +729,17 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jSeparator3.setPreferredSize(new java.awt.Dimension(500, 10));
         jForm.add(jSeparator3);
 
-        FPositionMain.setMinimumSize(new java.awt.Dimension(600, 300));
-        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 300));
+        FPositionMain.setMinimumSize(new java.awt.Dimension(600, 200));
+        FPositionMain.setOpaque(false);
+        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 200));
         FPositionMain.setLayout(new java.awt.BorderLayout());
 
         FPosition.setBackground(new java.awt.Color(255, 206, 0));
-        FPosition.setMinimumSize(new java.awt.Dimension(296, 50));
-        FPosition.setPreferredSize(new java.awt.Dimension(296, 100));
+        FPosition.setMinimumSize(new java.awt.Dimension(250, 100));
+        FPosition.setPreferredSize(new java.awt.Dimension(250, 100));
         java.awt.GridBagLayout FPositionLayout = new java.awt.GridBagLayout();
-        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
-        FPositionLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
+        FPositionLayout.rowHeights = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
         FPosition.setLayout(FPositionLayout);
 
         jPositionTitle.setColumns(20);
@@ -685,7 +752,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPositionTitle.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(jPositionTitle, gridBagConstraints);
 
@@ -693,7 +760,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lPositionTitle.setText("Position Title");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(lPositionTitle, gridBagConstraints);
 
@@ -706,15 +773,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmploymentType.setOpaque(true);
         jEmploymentType.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 12;
         FPosition.add(jEmploymentType, gridBagConstraints);
 
         lEmploymentType.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmploymentType.setText("Employment Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(lEmploymentType, gridBagConstraints);
 
@@ -731,7 +798,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         lProfile.setText("Choose Profile");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 48;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(lProfile, gridBagConstraints);
 
@@ -744,7 +811,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 52;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(jButton1, gridBagConstraints);
 
@@ -757,15 +824,15 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPassword.setOpaque(true);
         jPassword.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 52;
         FPosition.add(jPassword, gridBagConstraints);
 
         lPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lPassword.setText("Password");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridx = 16;
+        gridBagConstraints.gridy = 48;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(lPassword, gridBagConstraints);
 
@@ -796,7 +863,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(248, 98, 24));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("New Employee");
+        jLabel2.setText("Update Employee");
         jPanel3.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -805,29 +872,23 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
-    private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        doClose(RET_CANCEL);
-    }//GEN-LAST:event_closeDialog
-
-    private void jPostalCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostalCodeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPostalCodeActionPerformed
-
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        checkuser();
 
+        checkuser();
+        doClose(RET_OK);
+        JOptionPane.showMessageDialog(this, "Updated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
         doClose(RET_CANCEL);
-
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void jPostalCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostalCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPostalCodeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
@@ -835,11 +896,9 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void doClose(int retStatus) {
-        returnStatus = retStatus;
-        setVisible(false);
-        dispose();
-    }
+    private void jStreetAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStreetAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStreetAddressActionPerformed
 
     /**
      * @param args the command line arguments
@@ -858,20 +917,20 @@ public class AddEmployeeModal extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddEmployeeModal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddEmployeeModal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddEmployeeModal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddEmployeeModal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(updateEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddEmployeeModal dialog = new AddEmployeeModal(new com.mycompany.chick_int_dtr_system.Dashboard(), true);
+                updateEmployee dialog = new updateEmployee(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -903,7 +962,6 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JTextField jEmergencyName;
     private javax.swing.JTextField jEmergencyNumber;
     private javax.swing.JTextField jEmploymentType;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JTextField jFirstName;
     private javax.swing.JPanel jForm;
     private javax.swing.JTextField jGender;
@@ -949,5 +1007,11 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
-    private int returnStatus = RET_CANCEL;
+    private void checkuser() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void doClose(int RET_CANCEL) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

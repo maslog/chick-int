@@ -3,6 +3,7 @@
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Chick-Int"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1100, 800]"/>
     </Property>
@@ -30,7 +31,7 @@
     <Container class="javax.swing.JPanel" name="header">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="18" green="62" red="f8" type="rgb"/>
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[100, 150]"/>
@@ -98,10 +99,15 @@
             <Component class="javax.swing.JLabel" name="logo">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="20" green="67" red="f8" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Ronald\Documents\NetBeansProjects\Chick_Int_DTR_System\src\main\java\com\mycompany\chick_int_dtr_system\assets\system.png"/>
+                  <Image iconType="2" name="C:\Users\Ronald\Documents\NetBeansProjects\Chick_Int_DTR_System\src\main\java\com\mycompany\chick_int_dtr_system\assets\440964081_363357396210951_7696104280231318921_n.png"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
                 </Property>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
@@ -124,15 +130,24 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="20" green="67" red="f8" type="rgb"/>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Log Out"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Ronald\Documents\NetBeansProjects\Chick_Int_DTR_System\src\main\java\com\mycompany\chick_int_dtr_system\assets\Vector.png"/>
+                </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                    <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                  <Border info="null"/>
+                </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[100, 40]"/>
                 </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[100, 40]"/>
@@ -256,6 +271,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
+            <Property name="autoscrolls" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Microsoft New Tai Lue" size="18" style="1"/>
             </Property>
@@ -354,7 +370,7 @@
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                   <Table columnCount="6" rowCount="0">
-                                    <Column editable="true" title="#" type="java.lang.Object"/>
+                                    <Column editable="false" title="#" type="java.lang.Object"/>
                                     <Column editable="false" title="ID" type="java.lang.Object"/>
                                     <Column editable="false" title="Name" type="java.lang.Object"/>
                                     <Column editable="false" title="Time In" type="java.lang.Object"/>
@@ -365,32 +381,32 @@
                                 <Property name="autoResizeMode" type="int" value="4"/>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="0">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="5" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="5" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
                                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
@@ -398,6 +414,8 @@
                                   </TableColumnModel>
                                 </Property>
                                 <Property name="rowHeight" type="int" value="40"/>
+                                <Property name="rowMargin" type="int" value="10"/>
+                                <Property name="selectionMode" type="int" value="0"/>
                                 <Property name="showHorizontalLines" type="boolean" value="true"/>
                                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                                   <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
@@ -773,8 +791,61 @@
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
                                     <Property name="alignment" type="int" value="2"/>
+                                    <Property name="horizontalGap" type="int" value="15"/>
                                   </Layout>
                                   <SubComponents>
+                                    <Component class="javax.swing.JButton" name="refEmp2">
+                                      <Properties>
+                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="99" green="0" red="99" type="rgb"/>
+                                        </Property>
+                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                          <Font name="Segoe UI" size="14" style="1"/>
+                                        </Property>
+                                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Print Report"/>
+                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                            <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                        </Property>
+                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[120, 32]"/>
+                                        </Property>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[100, 32]"/>
+                                        </Property>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refEmp2ActionPerformed"/>
+                                      </Events>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButton4">
+                                      <Properties>
+                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="99" green="99" red="0" type="rgb"/>
+                                        </Property>
+                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                          <Font name="Segoe UI" size="14" style="1"/>
+                                        </Property>
+                                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Refresh"/>
+                                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                            <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                        </Property>
+                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[120, 32]"/>
+                                        </Property>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[100, 32]"/>
+                                        </Property>
+                                      </Properties>
+                                      <Events>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+                                      </Events>
+                                    </Component>
                                     <Component class="javax.swing.JLabel" name="jLabel5">
                                       <Properties>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -787,11 +858,13 @@
                                       <Properties>
                                         <Property name="columns" type="int" value="20"/>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                          <Font name="Segoe UI" size="18" style="1"/>
+                                          <Font name="Segoe UI" size="18" style="0"/>
                                         </Property>
+                                        <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
                                       </Properties>
                                       <Events>
                                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jSearchDashboardActionPerformed"/>
+                                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSearchDashboardKeyPressed"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>
@@ -813,7 +886,7 @@
                                 <Container class="javax.swing.JPanel" name="jPanel17">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                      <Color blue="ff" green="cc" red="99" type="rgb"/>
+                                      <Color blue="ff" green="96" red="0" type="rgb"/>
                                     </Property>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
@@ -838,7 +911,7 @@
                                           <Font name="Segoe UI" size="36" style="1"/>
                                         </Property>
                                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="66" green="66" red="66" type="rgb"/>
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                         <Property name="horizontalAlignment" type="int" value="0"/>
                                         <Property name="text" type="java.lang.String" value=" EMPLOYEES = 0"/>
@@ -860,7 +933,54 @@
                                 <Container class="javax.swing.JPanel" name="jPanel18">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                      <Color blue="cc" green="ff" red="ff" type="rgb"/>
+                                      <Color blue="ff" green="96" red="0" type="rgb"/>
+                                    </Property>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                                        <BevelBorder/>
+                                      </Border>
+                                    </Property>
+                                  </Properties>
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                      <GridBagConstraints gridX="4" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jCardEmployee1">
+                                      <Properties>
+                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="cc" green="ff" red="ff" type="rgb"/>
+                                        </Property>
+                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                          <Font name="Segoe UI" size="36" style="1"/>
+                                        </Property>
+                                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                        </Property>
+                                        <Property name="horizontalAlignment" type="int" value="0"/>
+                                        <Property name="text" type="java.lang.String" value=" RECORD = 0"/>
+                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[300, 80]"/>
+                                        </Property>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[300, 80]"/>
+                                        </Property>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                          <BorderConstraints direction="Center"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel23">
+                                  <Properties>
+                                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="96" red="0" type="rgb"/>
                                     </Property>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
@@ -876,19 +996,19 @@
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                                   <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jCardEmployee1">
+                                    <Component class="javax.swing.JLabel" name="jToday">
                                       <Properties>
                                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="cc" green="ff" red="ff" type="rgb"/>
+                                          <Color blue="66" green="ff" red="66" type="rgb"/>
                                         </Property>
                                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                           <Font name="Segoe UI" size="36" style="1"/>
                                         </Property>
                                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="66" green="66" red="66" type="rgb"/>
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                         <Property name="horizontalAlignment" type="int" value="0"/>
-                                        <Property name="text" type="java.lang.String" value=" RECORD = 0"/>
+                                        <Property name="text" type="java.lang.String" value="TODAY = 0"/>
                                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                           <Dimension value="[300, 80]"/>
                                         </Property>
@@ -896,6 +1016,9 @@
                                           <Dimension value="[300, 80]"/>
                                         </Property>
                                       </Properties>
+                                      <Events>
+                                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTodayMouseClicked"/>
+                                      </Events>
                                       <Constraints>
                                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                                           <BorderConstraints direction="Center"/>
@@ -928,7 +1051,7 @@
                                     <CodeExpression id="18">
                                       <ExpressionOrigin>
                                         <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
-                                          <PropertyValue value="[0, 25, 0]"/>
+                                          <PropertyValue value="[0, 25, 0, 25, 0]"/>
                                         </Value>
                                       </ExpressionOrigin>
                                     </CodeExpression>
@@ -943,7 +1066,7 @@
                                     <CodeExpression id="19">
                                       <ExpressionOrigin>
                                         <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
-                                          <PropertyValue value="[0]"/>
+                                          <PropertyValue value="[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]"/>
                                         </Value>
                                       </ExpressionOrigin>
                                     </CodeExpression>
@@ -1042,7 +1165,7 @@
                                   <Parameters>
                                     <CodeExpression id="26">
                                       <ExpressionOrigin>
-                                        <Value type="int" value="2"/>
+                                        <Value type="int" value="4"/>
                                       </ExpressionOrigin>
                                     </CodeExpression>
                                   </Parameters>
@@ -1075,6 +1198,62 @@
                                       </ExpressionOrigin>
                                     </CodeExpression>
                                     <CodeExpression id="25_gridBagConstraints"/>
+                                  </Parameters>
+                                </CodeStatement>
+                                <CodeStatement>
+                                  <CodeExpression id="29_gridBagConstraints">
+                                    <CodeVariable name="gridBagConstraints"/>
+                                    <ExpressionOrigin>
+                                      <ExpressionProvider type="CodeConstructor">
+                                        <CodeConstructor class="java.awt.GridBagConstraints" parameterTypes=""/>
+                                      </ExpressionProvider>
+                                    </ExpressionOrigin>
+                                  </CodeExpression>
+                                  <StatementProvider type="CodeExpression">
+                                    <CodeExpression id="29_gridBagConstraints"/>
+                                  </StatementProvider>
+                                </CodeStatement>
+                                <CodeStatement>
+                                  <CodeExpression id="29_gridBagConstraints"/>
+                                  <StatementProvider type="CodeField">
+                                    <CodeField name="gridx" class="java.awt.GridBagConstraints"/>
+                                  </StatementProvider>
+                                  <Parameters>
+                                    <CodeExpression id="30">
+                                      <ExpressionOrigin>
+                                        <Value type="int" value="2"/>
+                                      </ExpressionOrigin>
+                                    </CodeExpression>
+                                  </Parameters>
+                                </CodeStatement>
+                                <CodeStatement>
+                                  <CodeExpression id="29_gridBagConstraints"/>
+                                  <StatementProvider type="CodeField">
+                                    <CodeField name="gridy" class="java.awt.GridBagConstraints"/>
+                                  </StatementProvider>
+                                  <Parameters>
+                                    <CodeExpression id="31">
+                                      <ExpressionOrigin>
+                                        <Value type="int" value="0"/>
+                                      </ExpressionOrigin>
+                                    </CodeExpression>
+                                  </Parameters>
+                                </CodeStatement>
+                                <CodeStatement>
+                                  <CodeExpression id="20_cards"/>
+                                  <StatementProvider type="CodeMethod">
+                                    <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
+                                  </StatementProvider>
+                                  <Parameters>
+                                    <CodeExpression id="32_jPanel23">
+                                      <CodeVariable name="jPanel23" type="8194" declaredType="javax.swing.JPanel"/>
+                                      <ExpressionOrigin>
+                                        <ExpressionProvider type="ComponentRef">
+                                          <ComponentRef name="jPanel23"/>
+                                        </ExpressionProvider>
+                                      </ExpressionOrigin>
+                                    </CodeExpression>
+                                    <CodeExpression id="29_gridBagConstraints"/>
                                   </Parameters>
                                 </CodeStatement>
                               </LayoutCode>
@@ -1173,22 +1352,26 @@
                                   <Color blue="0" green="0" red="0" type="rgb"/>
                                 </Property>
                                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                                  <Table columnCount="9" rowCount="0">
-                                    <Column editable="true" title="#" type="java.lang.Object"/>
-                                    <Column editable="true" title="ID" type="java.lang.Object"/>
-                                    <Column editable="true" title="First Name" type="java.lang.Object"/>
-                                    <Column editable="true" title="Middle Name" type="java.lang.Object"/>
-                                    <Column editable="true" title="Last Name" type="java.lang.Object"/>
-                                    <Column editable="true" title="Gender" type="java.lang.Object"/>
-                                    <Column editable="true" title="Phone Number" type="java.lang.Object"/>
-                                    <Column editable="true" title="E-mail" type="java.lang.Object"/>
-                                    <Column editable="true" title="Action" type="java.lang.Object"/>
+                                  <Table columnCount="8" rowCount="0">
+                                    <Column editable="false" title="#" type="java.lang.Object"/>
+                                    <Column editable="false" title="ID" type="java.lang.Object"/>
+                                    <Column editable="false" title="First Name" type="java.lang.Object"/>
+                                    <Column editable="false" title="Middle Name" type="java.lang.Object"/>
+                                    <Column editable="false" title="Last Name" type="java.lang.Object"/>
+                                    <Column editable="false" title="Gender" type="java.lang.Object"/>
+                                    <Column editable="false" title="Phone Number" type="java.lang.Object"/>
+                                    <Column editable="false" title="E-mail" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
                                 <Property name="autoResizeMode" type="int" value="4"/>
                                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                                   <TableColumnModel selectionModel="0">
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="5" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
@@ -1218,32 +1401,23 @@
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                                      <Title/>
-                                      <Editor/>
-                                      <Renderer/>
-                                    </Column>
-                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="200" resizable="true">
                                       <Title/>
                                       <Editor/>
                                       <Renderer/>
                                     </Column>
                                   </TableColumnModel>
                                 </Property>
-                                <Property name="editingColumn" type="int" value="0"/>
-                                <Property name="editingRow" type="int" value="0"/>
-                                <Property name="enabled" type="boolean" value="false"/>
-                                <Property name="fillsViewportHeight" type="boolean" value="true"/>
                                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="99" green="99" red="99" type="rgb"/>
                                 </Property>
                                 <Property name="rowHeight" type="int" value="30"/>
-                                <Property name="showGrid" type="boolean" value="true"/>
+                                <Property name="selectionMode" type="int" value="0"/>
+                                <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+                                  <JTableSelectionModel selectionMode="0"/>
+                                </Property>
+                                <Property name="showGrid" type="boolean" value="false"/>
+                                <Property name="showHorizontalLines" type="boolean" value="true"/>
                                 <Property name="showVerticalLines" type="boolean" value="false"/>
                                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
@@ -1359,30 +1533,352 @@
                                     </Constraint>
                                   </Constraints>
 
-                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-                                    <Property name="alignment" type="int" value="2"/>
-                                  </Layout>
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                                   <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jLabel9">
+                                    <Container class="javax.swing.JPanel" name="jPanel22">
                                       <Properties>
-                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                          <Font name="Segoe UI" size="18" style="1"/>
-                                        </Property>
-                                        <Property name="text" type="java.lang.String" value="Search:"/>
-                                      </Properties>
-                                    </Component>
-                                    <Component class="javax.swing.JTextField" name="jSearchEmployee">
-                                      <Properties>
-                                        <Property name="columns" type="int" value="20"/>
-                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                          <Font name="Segoe UI" size="18" style="1"/>
+                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="0" green="ce" red="ff" type="rgb"/>
                                         </Property>
                                       </Properties>
-                                      <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jSearchEmployeeActionPerformed"/>
-                                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSearchEmployeeKeyTyped"/>
-                                      </Events>
-                                    </Component>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                          <BorderConstraints direction="Center"/>
+                                        </Constraint>
+                                      </Constraints>
+                                      <SubComponents>
+                                        <Component class="javax.swing.JButton" name="jButton1">
+                                          <Properties>
+                                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="33" green="cc" red="0" type="rgb"/>
+                                            </Property>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="18" style="1"/>
+                                            </Property>
+                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="Update"/>
+                                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                            </Property>
+                                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[150, 38]"/>
+                                            </Property>
+                                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[150, 38]"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                                          </Events>
+                                          <Constraints>
+                                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                              <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                            </Constraint>
+                                          </Constraints>
+                                        </Component>
+                                        <Component class="javax.swing.JButton" name="jButton3">
+                                          <Properties>
+                                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="0" green="33" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="18" style="1"/>
+                                            </Property>
+                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="Delete"/>
+                                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                            </Property>
+                                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[150, 38]"/>
+                                            </Property>
+                                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[150, 38]"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                                          </Events>
+                                          <Constraints>
+                                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                              <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                            </Constraint>
+                                          </Constraints>
+                                        </Component>
+                                      </SubComponents>
+                                      <LayoutCode>
+                                        <CodeStatement>
+                                          <CodeExpression id="33_jPanel22Layout">
+                                            <CodeVariable name="jPanel22Layout" type="4096" declaredType="java.awt.GridBagLayout"/>
+                                            <ExpressionOrigin>
+                                              <ExpressionProvider type="CodeConstructor">
+                                                <CodeConstructor class="java.awt.GridBagLayout" parameterTypes=""/>
+                                              </ExpressionProvider>
+                                            </ExpressionOrigin>
+                                          </CodeExpression>
+                                          <StatementProvider type="CodeExpression">
+                                            <CodeExpression id="33_jPanel22Layout"/>
+                                          </StatementProvider>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="33_jPanel22Layout"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="columnWidths" class="java.awt.GridBagLayout"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="34">
+                                              <ExpressionOrigin>
+                                                <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
+                                                  <PropertyValue value="[0, 12, 0]"/>
+                                                </Value>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="33_jPanel22Layout"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="rowHeights" class="java.awt.GridBagLayout"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="35">
+                                              <ExpressionOrigin>
+                                                <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
+                                                  <PropertyValue value="[0]"/>
+                                                </Value>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="36_jPanel22">
+                                            <CodeVariable name="jPanel22" type="8194" declaredType="javax.swing.JPanel"/>
+                                            <ExpressionOrigin>
+                                              <ExpressionProvider type="ComponentRef">
+                                                <ComponentRef name="jPanel22"/>
+                                              </ExpressionProvider>
+                                            </ExpressionOrigin>
+                                          </CodeExpression>
+                                          <StatementProvider type="CodeMethod">
+                                            <CodeMethod name="setLayout" class="java.awt.Container" parameterTypes="java.awt.LayoutManager"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="33_jPanel22Layout"/>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="37_gridBagConstraints">
+                                            <CodeVariable name="gridBagConstraints"/>
+                                            <ExpressionOrigin>
+                                              <ExpressionProvider type="CodeConstructor">
+                                                <CodeConstructor class="java.awt.GridBagConstraints" parameterTypes=""/>
+                                              </ExpressionProvider>
+                                            </ExpressionOrigin>
+                                          </CodeExpression>
+                                          <StatementProvider type="CodeExpression">
+                                            <CodeExpression id="37_gridBagConstraints"/>
+                                          </StatementProvider>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="37_gridBagConstraints"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="gridx" class="java.awt.GridBagConstraints"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="38">
+                                              <ExpressionOrigin>
+                                                <Value type="int" value="0"/>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="37_gridBagConstraints"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="gridy" class="java.awt.GridBagConstraints"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="39">
+                                              <ExpressionOrigin>
+                                                <Value type="int" value="0"/>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="36_jPanel22"/>
+                                          <StatementProvider type="CodeMethod">
+                                            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="40_jButton1">
+                                              <CodeVariable name="jButton1" type="8194" declaredType="javax.swing.JButton"/>
+                                              <ExpressionOrigin>
+                                                <ExpressionProvider type="ComponentRef">
+                                                  <ComponentRef name="jButton1"/>
+                                                </ExpressionProvider>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                            <CodeExpression id="37_gridBagConstraints"/>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="41_gridBagConstraints">
+                                            <CodeVariable name="gridBagConstraints"/>
+                                            <ExpressionOrigin>
+                                              <ExpressionProvider type="CodeConstructor">
+                                                <CodeConstructor class="java.awt.GridBagConstraints" parameterTypes=""/>
+                                              </ExpressionProvider>
+                                            </ExpressionOrigin>
+                                          </CodeExpression>
+                                          <StatementProvider type="CodeExpression">
+                                            <CodeExpression id="41_gridBagConstraints"/>
+                                          </StatementProvider>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="41_gridBagConstraints"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="gridx" class="java.awt.GridBagConstraints"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="42">
+                                              <ExpressionOrigin>
+                                                <Value type="int" value="2"/>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="41_gridBagConstraints"/>
+                                          <StatementProvider type="CodeField">
+                                            <CodeField name="gridy" class="java.awt.GridBagConstraints"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="43">
+                                              <ExpressionOrigin>
+                                                <Value type="int" value="0"/>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                          </Parameters>
+                                        </CodeStatement>
+                                        <CodeStatement>
+                                          <CodeExpression id="36_jPanel22"/>
+                                          <StatementProvider type="CodeMethod">
+                                            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
+                                          </StatementProvider>
+                                          <Parameters>
+                                            <CodeExpression id="44_jButton3">
+                                              <CodeVariable name="jButton3" type="8194" declaredType="javax.swing.JButton"/>
+                                              <ExpressionOrigin>
+                                                <ExpressionProvider type="ComponentRef">
+                                                  <ComponentRef name="jButton3"/>
+                                                </ExpressionProvider>
+                                              </ExpressionOrigin>
+                                            </CodeExpression>
+                                            <CodeExpression id="41_gridBagConstraints"/>
+                                          </Parameters>
+                                        </CodeStatement>
+                                      </LayoutCode>
+                                    </Container>
+                                    <Container class="javax.swing.JPanel" name="jPanel20">
+                                      <Properties>
+                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                          <Color blue="0" green="ce" red="ff" type="rgb"/>
+                                        </Property>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                          <BorderConstraints direction="After"/>
+                                        </Constraint>
+                                      </Constraints>
+
+                                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                        <Property name="alignment" type="int" value="2"/>
+                                        <Property name="horizontalGap" type="int" value="15"/>
+                                      </Layout>
+                                      <SubComponents>
+                                        <Component class="javax.swing.JButton" name="refEmp">
+                                          <Properties>
+                                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="99" green="99" red="0" type="rgb"/>
+                                            </Property>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="14" style="1"/>
+                                            </Property>
+                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="Refresh"/>
+                                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                            </Property>
+                                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[120, 32]"/>
+                                            </Property>
+                                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[100, 32]"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refEmpActionPerformed"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="javax.swing.JButton" name="refEmp1">
+                                          <Properties>
+                                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="99" green="0" red="99" type="rgb"/>
+                                            </Property>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="14" style="1"/>
+                                            </Property>
+                                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="Print Report"/>
+                                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                                <PropertyBean type="org.jdesktop.swingx.border.DropShadowBorder"/>
+                                            </Property>
+                                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[120, 32]"/>
+                                            </Property>
+                                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[100, 32]"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refEmp1ActionPerformed"/>
+                                          </Events>
+                                        </Component>
+                                        <Component class="javax.swing.JLabel" name="jLabel6">
+                                          <Properties>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="18" style="1"/>
+                                            </Property>
+                                            <Property name="text" type="java.lang.String" value="Search:"/>
+                                          </Properties>
+                                        </Component>
+                                        <Component class="javax.swing.JTextField" name="jSearchEmp">
+                                          <Properties>
+                                            <Property name="columns" type="int" value="13"/>
+                                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                              <Font name="Segoe UI" size="18" style="0"/>
+                                            </Property>
+                                            <Property name="actionCommand" type="java.lang.String" value="&lt;Not Set&gt;"/>
+                                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                              <Dimension value="[150, 35]"/>
+                                            </Property>
+                                          </Properties>
+                                          <Events>
+                                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jSearchEmpActionPerformed"/>
+                                            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jSearchEmpKeyPressed"/>
+                                          </Events>
+                                        </Component>
+                                      </SubComponents>
+                                    </Container>
                                   </SubComponents>
                                 </Container>
                               </SubComponents>
@@ -1402,7 +1898,7 @@
                                 <Container class="javax.swing.JPanel" name="jPanel19">
                                   <Properties>
                                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                      <Color blue="ff" green="cc" red="99" type="rgb"/>
+                                      <Color blue="ff" green="96" red="0" type="rgb"/>
                                     </Property>
                                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                       <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
@@ -1427,7 +1923,7 @@
                                           <Font name="Segoe UI" size="36" style="1"/>
                                         </Property>
                                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="66" green="66" red="66" type="rgb"/>
+                                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                         </Property>
                                         <Property name="horizontalAlignment" type="int" value="0"/>
                                         <Property name="text" type="java.lang.String" value=" EMPLOYEES = 0"/>
@@ -1446,57 +1942,10 @@
                                     </Component>
                                   </SubComponents>
                                 </Container>
-                                <Container class="javax.swing.JPanel" name="jPanel20">
-                                  <Properties>
-                                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                      <Color blue="cc" green="ff" red="ff" type="rgb"/>
-                                    </Property>
-                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                      <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                                        <BevelBorder/>
-                                      </Border>
-                                    </Property>
-                                  </Properties>
-                                  <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                                      <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
-                                    </Constraint>
-                                  </Constraints>
-
-                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
-                                  <SubComponents>
-                                    <Component class="javax.swing.JLabel" name="jCardEmployee3">
-                                      <Properties>
-                                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="cc" green="ff" red="ff" type="rgb"/>
-                                        </Property>
-                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                          <Font name="Segoe UI" size="36" style="1"/>
-                                        </Property>
-                                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                          <Color blue="66" green="66" red="66" type="rgb"/>
-                                        </Property>
-                                        <Property name="horizontalAlignment" type="int" value="0"/>
-                                        <Property name="text" type="java.lang.String" value=" RECORD = 0"/>
-                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                          <Dimension value="[300, 80]"/>
-                                        </Property>
-                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                          <Dimension value="[300, 80]"/>
-                                        </Property>
-                                      </Properties>
-                                      <Constraints>
-                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                                          <BorderConstraints direction="Center"/>
-                                        </Constraint>
-                                      </Constraints>
-                                    </Component>
-                                  </SubComponents>
-                                </Container>
                               </SubComponents>
                               <LayoutCode>
                                 <CodeStatement>
-                                  <CodeExpression id="29_cards1Layout">
+                                  <CodeExpression id="45_cards1Layout">
                                     <CodeVariable name="cards1Layout" type="4096" declaredType="java.awt.GridBagLayout"/>
                                     <ExpressionOrigin>
                                       <ExpressionProvider type="CodeConstructor">
@@ -1505,16 +1954,16 @@
                                     </ExpressionOrigin>
                                   </CodeExpression>
                                   <StatementProvider type="CodeExpression">
-                                    <CodeExpression id="29_cards1Layout"/>
+                                    <CodeExpression id="45_cards1Layout"/>
                                   </StatementProvider>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="29_cards1Layout"/>
+                                  <CodeExpression id="45_cards1Layout"/>
                                   <StatementProvider type="CodeField">
                                     <CodeField name="columnWidths" class="java.awt.GridBagLayout"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="30">
+                                    <CodeExpression id="46">
                                       <ExpressionOrigin>
                                         <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
                                           <PropertyValue value="[0, 25, 0]"/>
@@ -1524,12 +1973,12 @@
                                   </Parameters>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="29_cards1Layout"/>
+                                  <CodeExpression id="45_cards1Layout"/>
                                   <StatementProvider type="CodeField">
                                     <CodeField name="rowHeights" class="java.awt.GridBagLayout"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="31">
+                                    <CodeExpression id="47">
                                       <ExpressionOrigin>
                                         <Value type="[I" editor="org.netbeans.modules.form.layoutsupport.delegates.GridBagLayoutSupport$IntArrayPropertyEditor">
                                           <PropertyValue value="[0]"/>
@@ -1539,7 +1988,7 @@
                                   </Parameters>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="32_cards1">
+                                  <CodeExpression id="48_cards1">
                                     <CodeVariable name="cards1" type="8194" declaredType="javax.swing.JPanel"/>
                                     <ExpressionOrigin>
                                       <ExpressionProvider type="ComponentRef">
@@ -1551,11 +2000,11 @@
                                     <CodeMethod name="setLayout" class="java.awt.Container" parameterTypes="java.awt.LayoutManager"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="29_cards1Layout"/>
+                                    <CodeExpression id="45_cards1Layout"/>
                                   </Parameters>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="33_gridBagConstraints">
+                                  <CodeExpression id="49_gridBagConstraints">
                                     <CodeVariable name="gridBagConstraints"/>
                                     <ExpressionOrigin>
                                       <ExpressionProvider type="CodeConstructor">
@@ -1564,16 +2013,16 @@
                                     </ExpressionOrigin>
                                   </CodeExpression>
                                   <StatementProvider type="CodeExpression">
-                                    <CodeExpression id="33_gridBagConstraints"/>
+                                    <CodeExpression id="49_gridBagConstraints"/>
                                   </StatementProvider>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="33_gridBagConstraints"/>
+                                  <CodeExpression id="49_gridBagConstraints"/>
                                   <StatementProvider type="CodeField">
                                     <CodeField name="gridx" class="java.awt.GridBagConstraints"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="34">
+                                    <CodeExpression id="50">
                                       <ExpressionOrigin>
                                         <Value type="int" value="0"/>
                                       </ExpressionOrigin>
@@ -1581,12 +2030,12 @@
                                   </Parameters>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="33_gridBagConstraints"/>
+                                  <CodeExpression id="49_gridBagConstraints"/>
                                   <StatementProvider type="CodeField">
                                     <CodeField name="gridy" class="java.awt.GridBagConstraints"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="35">
+                                    <CodeExpression id="51">
                                       <ExpressionOrigin>
                                         <Value type="int" value="0"/>
                                       </ExpressionOrigin>
@@ -1594,12 +2043,12 @@
                                   </Parameters>
                                 </CodeStatement>
                                 <CodeStatement>
-                                  <CodeExpression id="32_cards1"/>
+                                  <CodeExpression id="48_cards1"/>
                                   <StatementProvider type="CodeMethod">
                                     <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
                                   </StatementProvider>
                                   <Parameters>
-                                    <CodeExpression id="36_jPanel19">
+                                    <CodeExpression id="52_jPanel19">
                                       <CodeVariable name="jPanel19" type="8194" declaredType="javax.swing.JPanel"/>
                                       <ExpressionOrigin>
                                         <ExpressionProvider type="ComponentRef">
@@ -1607,63 +2056,7 @@
                                         </ExpressionProvider>
                                       </ExpressionOrigin>
                                     </CodeExpression>
-                                    <CodeExpression id="33_gridBagConstraints"/>
-                                  </Parameters>
-                                </CodeStatement>
-                                <CodeStatement>
-                                  <CodeExpression id="37_gridBagConstraints">
-                                    <CodeVariable name="gridBagConstraints"/>
-                                    <ExpressionOrigin>
-                                      <ExpressionProvider type="CodeConstructor">
-                                        <CodeConstructor class="java.awt.GridBagConstraints" parameterTypes=""/>
-                                      </ExpressionProvider>
-                                    </ExpressionOrigin>
-                                  </CodeExpression>
-                                  <StatementProvider type="CodeExpression">
-                                    <CodeExpression id="37_gridBagConstraints"/>
-                                  </StatementProvider>
-                                </CodeStatement>
-                                <CodeStatement>
-                                  <CodeExpression id="37_gridBagConstraints"/>
-                                  <StatementProvider type="CodeField">
-                                    <CodeField name="gridx" class="java.awt.GridBagConstraints"/>
-                                  </StatementProvider>
-                                  <Parameters>
-                                    <CodeExpression id="38">
-                                      <ExpressionOrigin>
-                                        <Value type="int" value="2"/>
-                                      </ExpressionOrigin>
-                                    </CodeExpression>
-                                  </Parameters>
-                                </CodeStatement>
-                                <CodeStatement>
-                                  <CodeExpression id="37_gridBagConstraints"/>
-                                  <StatementProvider type="CodeField">
-                                    <CodeField name="gridy" class="java.awt.GridBagConstraints"/>
-                                  </StatementProvider>
-                                  <Parameters>
-                                    <CodeExpression id="39">
-                                      <ExpressionOrigin>
-                                        <Value type="int" value="0"/>
-                                      </ExpressionOrigin>
-                                    </CodeExpression>
-                                  </Parameters>
-                                </CodeStatement>
-                                <CodeStatement>
-                                  <CodeExpression id="32_cards1"/>
-                                  <StatementProvider type="CodeMethod">
-                                    <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
-                                  </StatementProvider>
-                                  <Parameters>
-                                    <CodeExpression id="40_jPanel20">
-                                      <CodeVariable name="jPanel20" type="8194" declaredType="javax.swing.JPanel"/>
-                                      <ExpressionOrigin>
-                                        <ExpressionProvider type="ComponentRef">
-                                          <ComponentRef name="jPanel20"/>
-                                        </ExpressionProvider>
-                                      </ExpressionOrigin>
-                                    </CodeExpression>
-                                    <CodeExpression id="37_gridBagConstraints"/>
+                                    <CodeExpression id="49_gridBagConstraints"/>
                                   </Parameters>
                                 </CodeStatement>
                               </LayoutCode>
@@ -1674,90 +2067,6 @@
                     </Container>
                   </SubComponents>
                 </Container>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JPanel" name="reportsPane">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ce" red="ff" type="rgb"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Reports">
-                    <Property name="tabTitle" type="java.lang.String" value="Reports"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="379" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" pref="106" max="-2" attributes="0"/>
-                          <EmptySpace pref="996" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="421" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel7">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Reports"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JPanel" name="settingsPane">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="ce" red="ff" type="rgb"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Settings">
-                    <Property name="tabTitle" type="java.lang.String" value="Settings"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="379" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="107" max="-2" attributes="0"/>
-                          <EmptySpace pref="995" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="441" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel8">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Settings"/>
-                  </Properties>
-                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

@@ -164,6 +164,7 @@ public class TimeIn extends javax.swing.JFrame {
         jTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Chick-Int");
         setBackground(new java.awt.Color(255, 206, 0));
         setUndecorated(true);
         setType(java.awt.Window.Type.POPUP);

@@ -1,0 +1,270 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package com.mycompany.chick_int_dtr_system.Components.experiment;
+
+import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.chick_int_dtr_system.Components.AddEmployeeModal;
+import com.mycompany.chick_int_dtr_system.Components.Database;
+import com.mycompany.chick_int_dtr_system.Components.DigitalClock;
+import com.mycompany.chick_int_dtr_system.Dashboard;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+import java.awt.print.PrinterException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Ronald
+ */
+public class reportToday extends javax.swing.JFrame {
+
+    /**
+     * Creates new form reportToday
+     */
+    DigitalClock TimeAndDate = new DigitalClock();
+
+    public reportToday() {
+        FlatLightLaf.setup();
+        initComponents();
+        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\440964081_363357396210951_7696104280231318921_n.png");
+        this.setIconImage(icon.getImage());
+
+        dashboardTable();
+
+    }
+
+    public void print() {
+        try {
+            MessageFormat header = new MessageFormat("CHICK-INT SYSTEM ATTENDANCE REPORT");
+            MessageFormat footer = new MessageFormat("UNIVERSITY OF THE IMMACULATE CONCEPTION");
+            jTableReportToday.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException e) {
+            JOptionPane.showMessageDialog(null, "Cannot be Print!");
+        }
+    }
+
+    public void dashboardTable() {
+        try {
+
+            Connection conn = Database.getConnection();
+//          String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
+//            String query = "SELECT * FROM db_chick_int.employee WHERE isActive = 1";
+            String query = "SELECT * FROM db_chick_int.record AS tb1 INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee ORDER BY tb1.idtime DESC";
+            String query2 = "SELECT * FROM db_chick_int.record AS tb1 INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee WHERE tb1.date = '" + TimeAndDate.updateDate() + "' ORDER BY tb1.idtime DESC";
+            String query3 = "SELECT * FROM db_chick_int.record AS tb1 "
+                    + "INNER JOIN db_chick_int.employee AS tb2 ON tb1.idemployee = tb2.idemployee "
+                    + "WHERE tb1.date = '" + TimeAndDate.updateDate() + "' "
+                    + "ORDER BY tb1.idtime DESC";
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query3);
+
+            ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
+            DefaultTableModel tblModel = (DefaultTableModel) jTableReportToday.getModel();
+            tblModel.setRowCount(0);
+
+//            int cols = rsmd.getColumnCount();
+//            String[] colName = new String[cols];
+//            for(int i =0; i < cols; i++){
+//                colName[i] = rsmd.getColumnName(i+1);
+//            }
+//            tblModel.setColumnIdentifiers(colName);
+            String num, id, firstname, middlename, lastname, name, timein, timeout, date;
+            int no = 0;
+            while (rs.next()) {
+                id = String.valueOf(rs.getInt("idemployee"));
+                firstname = rs.getString("firstname");
+
+                middlename = rs.getString("middlename");
+                lastname = rs.getString("lastname");
+                timein = rs.getString("timein");
+                timeout = rs.getString("timeout");
+                date = rs.getString("date");
+                System.out.println(firstname);
+                name = firstname + " " + middlename + " " + lastname;
+                no += 1;
+                num = String.valueOf(no);
+                System.out.println(firstname);
+                String[] data = {num, id, name, timein, timeout, date};
+
+                tblModel.addRow(data);
+
+            }
+
+            statement.close();
+
+            Database.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableReportToday = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(1100, 700));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1100, 700));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jTableReportToday.setAutoCreateRowSorter(true);
+        jTableReportToday.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTableReportToday.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "#", "ID", "Name", "Time In", "Time Out", "Date"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableReportToday.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTableReportToday.setRowHeight(40);
+        jTableReportToday.setRowMargin(10);
+        jTableReportToday.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableReportToday.setShowHorizontalLines(true);
+        jTableReportToday.getTableHeader().setResizingAllowed(false);
+        jTableReportToday.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTableReportToday);
+
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
+        jPanel2Layout.columnWidths = new int[] {0, 35, 0, 35, 0};
+        jPanel2Layout.rowHeights = new int[] {0};
+        jPanel2.setLayout(jPanel2Layout);
+
+        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("BACK");
+        jButton1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jButton1.setMinimumSize(new java.awt.Dimension(200, 50));
+        jButton1.setPreferredSize(new java.awt.Dimension(200, 50));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(jButton1, gridBagConstraints);
+
+        jButton2.setBackground(new java.awt.Color(153, 0, 153));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("PRINT RECORD");
+        jButton2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jButton2.setMinimumSize(new java.awt.Dimension(200, 50));
+        jButton2.setPreferredSize(new java.awt.Dimension(200, 50));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        jPanel2.add(jButton2, gridBagConstraints);
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new Dashboard().setVisible(rootPaneCheckingEnabled);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        print();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(reportToday.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(reportToday.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(reportToday.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(reportToday.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new reportToday().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableReportToday;
+    // End of variables declaration//GEN-END:variables
+}

@@ -175,6 +175,7 @@ public class TimeOutDashboard extends javax.swing.JFrame {
         jTime = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chick-Int");
         setBackground(new java.awt.Color(255, 206, 0));
         setUndecorated(true);
 
