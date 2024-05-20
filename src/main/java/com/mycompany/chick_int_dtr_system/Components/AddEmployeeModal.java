@@ -11,6 +11,9 @@ import com.mycompany.chick_int_dtr_system.UserUI;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +24,7 @@ import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
@@ -43,15 +47,23 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     /**
      * Creates new form AddEmployeeModal
      */
+    String filenameImage;
+    String filePath = "chick - int - logo.png";
+    
+    
+
     public AddEmployeeModal(com.mycompany.chick_int_dtr_system.Dashboard parent, boolean modal) {
         super(parent, modal);
         dashboard = parent;
         initComponents();
 
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(9);
-        
-        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\440964081_363357396210951_7696104280231318921_n.png");
+
+        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\chick-int-logo.png");
         this.setIconImage(icon.getImage());
+
+        ScaleImg(jImage);
+
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -102,12 +114,13 @@ public class AddEmployeeModal extends javax.swing.JDialog {
             String eNum = jEmergencyNumber.getText();
             String pTitle = jPositionTitle.getText();
             String emType = jEmploymentType.getText();
-
             String pass = jPassword.getText();
+            storeFile();
+            String filePathStore = filePath;
 
             Connection conn = Database.getConnection();
             //String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
-            String query2 = "INSERT INTO `db_chick_int`.`employee` ( `firstname`, `middlename`, `lastname`, `age`, `gender`, `birthdate`, `streetAddress`, `city`, `region`, `postalCode`, `phoneNumber`, `email`, `emergencyName`, `emergencyNumber`, `positionTitle`, `employmentType`, `password`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "', " + age + ", '" + gender + "', '" + birth + "', '" + street + "', '" + city + "', '" + region + "', '" + postal + "', '" + pNumber + "', '" + email + "', '" + eName + "', '" + eNum + "', '" + pTitle + "', '" + emType + "', '" + pass + "')";
+            String query2 = "INSERT INTO `db_chick_int`.`employee` ( `firstname`, `middlename`, `lastname`, `age`, `gender`, `birthdate`, `streetAddress`, `city`, `region`, `postalCode`, `phoneNumber`, `email`, `emergencyName`, `emergencyNumber`, `positionTitle`, `employmentType`, `password`, `imageUrl`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "', " + age + ", '" + gender + "', '" + birth + "', '" + street + "', '" + city + "', '" + region + "', '" + postal + "', '" + pNumber + "', '" + email + "', '" + eName + "', '" + eNum + "', '" + pTitle + "', '" + emType + "', '" + pass + "', '" + filePathStore + "')";
 
             Statement statement = conn.createStatement();
             statement.execute(query2);
@@ -119,6 +132,50 @@ public class AddEmployeeModal extends javax.swing.JDialog {
             Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void ScaleImg(JLabel label) {
+        ImageIcon ic = (ImageIcon) label.getIcon();
+        Image scaled = ic.getImage().getScaledInstance(jImage.getWidth(), jImage.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(scaled));
+    }
+
+    public void getImage() {
+        if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
+
+            File file = jFileChooser1.getSelectedFile();
+            jImage.setIcon(new ImageIcon(file.toString()));
+            filenameImage = file.getAbsolutePath();
+            jImagePath.setText(filenameImage);
+
+            ScaleImg(jImage);
+
+        }
+
+    }
+
+    public void storeFile() {
+        try {
+            String newPath = "C:\\Users\\Ronald\\Desktop\\BSCSINC\\Uploads\\Profiles\\";
+            File dir = new File(newPath);
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+                System.out.println("Created");
+            }
+
+            File sourceFile = null;
+            File destination = null;
+            String ext = filenameImage.substring(filenameImage.lastIndexOf(".") + 1);
+            sourceFile = new File(filenameImage);
+            destination = new File(newPath + jFirstName.getText() + jMiddleName.getText() + jLastName.getText() + "." + ext);
+            filePath = destination.getName();
+            Files.copy(sourceFile.toPath(), destination.toPath());
+
+            System.out.println(filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -198,6 +255,9 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jPassword = new javax.swing.JTextField();
         lPassword = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jImage = new javax.swing.JLabel();
+        jImagePath = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -671,8 +731,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         FPosition.setMinimumSize(new java.awt.Dimension(296, 50));
         FPosition.setPreferredSize(new java.awt.Dimension(296, 100));
         java.awt.GridBagLayout FPositionLayout = new java.awt.GridBagLayout();
-        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
-        FPositionLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
+        FPositionLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         FPosition.setLayout(FPositionLayout);
 
         jPositionTitle.setColumns(20);
@@ -706,14 +766,14 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jEmploymentType.setOpaque(true);
         jEmploymentType.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 6;
         FPosition.add(jEmploymentType, gridBagConstraints);
 
         lEmploymentType.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmploymentType.setText("Employment Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(lEmploymentType, gridBagConstraints);
@@ -757,17 +817,42 @@ public class AddEmployeeModal extends javax.swing.JDialog {
         jPassword.setOpaque(true);
         jPassword.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 12;
         FPosition.add(jPassword, gridBagConstraints);
 
         lPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lPassword.setText("Password");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
+        gridBagConstraints.gridx = 14;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(lPassword, gridBagConstraints);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jImage.setBackground(new java.awt.Color(255, 255, 255));
+        jImage.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\chick-int-logo.png")); // NOI18N
+        jImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jImage.setMinimumSize(new java.awt.Dimension(200, 200));
+        jImage.setPreferredSize(new java.awt.Dimension(100, 100));
+        jPanel2.add(jImage, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(6, 7, 5, 4);
+        FPosition.add(jPanel2, gridBagConstraints);
+
+        jImagePath.setColumns(20);
+        jImagePath.setMinimumSize(new java.awt.Dimension(160, 32));
+        jImagePath.setPreferredSize(new java.awt.Dimension(160, 32));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(jImagePath, gridBagConstraints);
 
         FPositionMain.add(FPosition, java.awt.BorderLayout.CENTER);
 
@@ -830,9 +915,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
-
-        }
+        getImage();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void doClose(int retStatus) {
@@ -907,6 +990,8 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JTextField jFirstName;
     private javax.swing.JPanel jForm;
     private javax.swing.JTextField jGender;
+    private javax.swing.JLabel jImage;
+    private javax.swing.JTextField jImagePath;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -915,6 +1000,7 @@ public class AddEmployeeModal extends javax.swing.JDialog {
     private javax.swing.JTextField jLastName;
     private javax.swing.JTextField jMiddleName;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField jPassword;
     private javax.swing.JTextField jPhoneNumber;

@@ -8,6 +8,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 import com.mycompany.chick_int_dtr_system.Dashboard;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,6 +39,8 @@ public class updateForm extends javax.swing.JFrame {
      *
      */
     String idEmpl;
+    String filenameImage;
+    String filePath = "chick - int - logo.png";
 
     public updateForm() {
         FlatLightLaf.setup();
@@ -44,9 +51,11 @@ public class updateForm extends javax.swing.JFrame {
         this.setVisible(true);
 
         jScrollPane2.getVerticalScrollBar().setUnitIncrement(9);
-        
-        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\440964081_363357396210951_7696104280231318921_n.png");
+
+        ImageIcon icon = new ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\chick-int-logo.png");
         this.setIconImage(icon.getImage());
+
+        ScaleImg2(jShowImageUpdate);
     }
 
     public void selectData(String idemp) {
@@ -59,7 +68,7 @@ public class updateForm extends javax.swing.JFrame {
 
             ResultSetMetaData rsmd = (ResultSetMetaData) rs.getMetaData();
 
-            String num, id, firstname, middlename, lastname, gender, pNumber, email, position;
+            String num, id, firstname, middlename, lastname, gender, pNumber, email, position, urll;
             int no = 0;
             while (rs.next()) {
                 id = String.valueOf(rs.getInt(1));
@@ -70,7 +79,7 @@ public class updateForm extends javax.swing.JFrame {
                 email = rs.getString("email");
                 pNumber = rs.getString("phoneNumber");
                 position = rs.getString("positionTitle");
-
+                urll = rs.getString("imageUrl");
                 no += 1;
                 num = String.valueOf(no);
 
@@ -94,7 +103,11 @@ public class updateForm extends javax.swing.JFrame {
                 jPositionTitle.setText(rs.getString("positionTitle"));
                 jEmploymentType.setText(rs.getString("employmentType"));
                 jPassword.setText(rs.getString("password"));
+                jShowImageUpdate.setIcon(new ImageIcon("C:\\Users\\Ronald\\Desktop\\BSCSINC\\Uploads\\Profiles\\" + urll));
+                jImagePathUpdate.setText("C:\\Users\\Ronald\\Desktop\\BSCSINC\\Uploads\\Profiles\\" + urll);
+                ScaleImg2(jShowImageUpdate);
 
+                filenameImage = "C:\\Users\\Ronald\\Desktop\\BSCSINC\\Uploads\\Profiles\\" + urll;
             }
 
             statement.close();
@@ -103,6 +116,12 @@ public class updateForm extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void ScaleImg2(JLabel label) {
+        ImageIcon ic = (ImageIcon) label.getIcon();
+        Image scaled = ic.getImage().getScaledInstance(jShowImageUpdate.getWidth(), jShowImageUpdate.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(scaled));
     }
 
     public static void setDateFromString(String dateStr, JDateChooser dateChooser) {
@@ -148,8 +167,10 @@ public class updateForm extends javax.swing.JFrame {
             String pTitle = jPositionTitle.getText();
             String emType = jEmploymentType.getText();
             String pass = jPassword.getText();
-
+            storeFile();
+            String urll = filePath;
             Connection conn = Database.getConnection();
+
             //String query = "INSERT INTO `db_chick_int`.`employee` (`firstname`, `middlename`, `lastname`) VALUES ('" + firstname + "', '" + middlename + "', '" + lastname + "');";
             String query2 = "UPDATE `db_chick_int`.`employee` SET "
                     + "`firstname` = '" + firstname + "', "
@@ -168,7 +189,8 @@ public class updateForm extends javax.swing.JFrame {
                     + "`emergencyNumber` = '" + eNum + "', "
                     + "`positionTitle` = '" + pTitle + "', "
                     + "`employmentType` = '" + emType + "', "
-                    + "`password` = '" + pass + "' "
+                    + "`password` = '" + pass + "', "
+                    + "`imageUrl` = '" + urll + "' "
                     + "WHERE `idemployee` = '" + id + "'";
             Statement statement = conn.createStatement();
             statement.execute(query2);
@@ -203,6 +225,44 @@ public class updateForm extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Fill in the blank!", "Warning", JOptionPane.ERROR_MESSAGE);
 
+        }
+    }
+
+    public void getImage() {
+        if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
+
+            File file = jFileChooser1.getSelectedFile();
+            jShowImageUpdate.setIcon(new ImageIcon(file.toString()));
+            filenameImage = file.getAbsolutePath();
+            jImagePathUpdate.setText(filenameImage);
+
+            ScaleImg2(jShowImageUpdate);
+
+        }
+
+    }
+
+    public void storeFile() {
+        try {
+            String newPath = "C:\\Users\\Ronald\\Desktop\\BSCSINC\\Uploads\\Profiles\\";
+            File dir = new File(newPath);
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+                System.out.println("Created");
+            }
+
+            File sourceFile = null;
+            File destination = null;
+            String ext = filenameImage.substring(filenameImage.lastIndexOf(".") + 1);
+            sourceFile = new File(filenameImage);
+            destination = new File(newPath + jFirstName.getText() + jMiddleName.getText() + jLastName.getText() + "." + ext);
+            filePath = destination.getName();
+            Files.copy(sourceFile.toPath(), destination.toPath());
+
+            System.out.println(filePath);
+        } catch (IOException ex) {
+            Logger.getLogger(AddEmployeeModal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -278,6 +338,9 @@ public class updateForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPassword = new javax.swing.JTextField();
         lPassword = new javax.swing.JLabel();
+        jPanelImage = new javax.swing.JPanel();
+        jShowImageUpdate = new javax.swing.JLabel();
+        jImagePathUpdate = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -299,9 +362,9 @@ public class updateForm extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.setMinimumSize(new java.awt.Dimension(500, 600));
+        jPanel2.setMinimumSize(new java.awt.Dimension(500, 1500));
         jPanel2.setOpaque(false);
-        jPanel2.setPreferredSize(new java.awt.Dimension(500, 600));
+        jPanel2.setPreferredSize(new java.awt.Dimension(500, 1500));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
@@ -310,8 +373,8 @@ public class updateForm extends javax.swing.JFrame {
         jScrollPane2.setMinimumSize(new java.awt.Dimension(500, 500));
         jScrollPane2.setPreferredSize(new java.awt.Dimension(500, 500));
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(500, 800));
-        jPanel1.setPreferredSize(new java.awt.Dimension(500, 800));
+        jPanel1.setMinimumSize(new java.awt.Dimension(500, 850));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 850));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         buttonPanel.setBackground(new java.awt.Color(255, 206, 0));
@@ -353,8 +416,8 @@ public class updateForm extends javax.swing.JFrame {
         main.setLayout(new java.awt.BorderLayout());
 
         jForm.setBackground(new java.awt.Color(255, 206, 0));
-        jForm.setMinimumSize(new java.awt.Dimension(4550, 900));
-        jForm.setPreferredSize(new java.awt.Dimension(500, 900));
+        jForm.setMinimumSize(new java.awt.Dimension(4550, 1000));
+        jForm.setPreferredSize(new java.awt.Dimension(500, 100));
         jForm.setRequestFocusEnabled(false);
 
         FNameMain.setMinimumSize(new java.awt.Dimension(100, 100));
@@ -761,15 +824,15 @@ public class updateForm extends javax.swing.JFrame {
 
         FPositionMain.setMinimumSize(new java.awt.Dimension(600, 200));
         FPositionMain.setOpaque(false);
-        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 200));
+        FPositionMain.setPreferredSize(new java.awt.Dimension(600, 260));
         FPositionMain.setLayout(new java.awt.BorderLayout());
 
         FPosition.setBackground(new java.awt.Color(255, 206, 0));
-        FPosition.setMinimumSize(new java.awt.Dimension(250, 100));
-        FPosition.setPreferredSize(new java.awt.Dimension(250, 100));
+        FPosition.setMinimumSize(new java.awt.Dimension(600, 400));
+        FPosition.setPreferredSize(new java.awt.Dimension(600, 400));
         java.awt.GridBagLayout FPositionLayout = new java.awt.GridBagLayout();
-        FPositionLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
-        FPositionLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        FPositionLayout.columnWidths = new int[] {0, 1, 0, 1, 0, 1, 0, 1, 0};
+        FPositionLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         FPosition.setLayout(FPositionLayout);
 
         jPositionTitle.setColumns(20);
@@ -787,7 +850,7 @@ public class updateForm extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(jPositionTitle, gridBagConstraints);
 
@@ -795,7 +858,7 @@ public class updateForm extends javax.swing.JFrame {
         lPositionTitle.setText("Position Title");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(lPositionTitle, gridBagConstraints);
 
@@ -808,15 +871,15 @@ public class updateForm extends javax.swing.JFrame {
         jEmploymentType.setOpaque(true);
         jEmploymentType.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 4;
         FPosition.add(jEmploymentType, gridBagConstraints);
 
         lEmploymentType.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lEmploymentType.setText("Employment Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         FPosition.add(lEmploymentType, gridBagConstraints);
 
@@ -833,7 +896,7 @@ public class updateForm extends javax.swing.JFrame {
         lProfile.setText("Choose Profile");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 48;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(lProfile, gridBagConstraints);
 
@@ -846,7 +909,7 @@ public class updateForm extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 52;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(jButton1, gridBagConstraints);
 
@@ -859,17 +922,46 @@ public class updateForm extends javax.swing.JFrame {
         jPassword.setOpaque(true);
         jPassword.setPreferredSize(new java.awt.Dimension(160, 32));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
-        gridBagConstraints.gridy = 52;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 10;
         FPosition.add(jPassword, gridBagConstraints);
 
         lPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lPassword.setText("Password");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 16;
-        gridBagConstraints.gridy = 48;
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         FPosition.add(lPassword, gridBagConstraints);
+
+        jPanelImage.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelImage.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanelImage.setPreferredSize(new java.awt.Dimension(100, 100));
+        jPanelImage.setLayout(new java.awt.BorderLayout());
+
+        jShowImageUpdate.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ronald\\Documents\\NetBeansProjects\\Chick_Int_DTR_System\\src\\main\\java\\com\\mycompany\\chick_int_dtr_system\\assets\\chick-int-logo.png")); // NOI18N
+        jPanelImage.add(jShowImageUpdate, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(jPanelImage, gridBagConstraints);
+
+        jImagePathUpdate.setColumns(20);
+        jImagePathUpdate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jImagePathUpdate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jImagePathUpdate.setMinimumSize(new java.awt.Dimension(160, 32));
+        jImagePathUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jImagePathUpdateActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        FPosition.add(jImagePathUpdate, gridBagConstraints);
 
         FPositionMain.add(FPosition, java.awt.BorderLayout.CENTER);
 
@@ -921,7 +1013,7 @@ public class updateForm extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -989,9 +1081,7 @@ public class updateForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jPostalCodeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jFileChooser1.showOpenDialog(null) == jFileChooser1.APPROVE_OPTION) {
-
-        }
+        getImage();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPositionTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPositionTitleActionPerformed
@@ -1005,6 +1095,10 @@ public class updateForm extends javax.swing.JFrame {
         d.setVisible(rootPaneCheckingEnabled);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jImagePathUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jImagePathUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jImagePathUpdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1066,6 +1160,7 @@ public class updateForm extends javax.swing.JFrame {
     private javax.swing.JTextField jFirstName;
     private javax.swing.JPanel jForm;
     private javax.swing.JTextField jGender;
+    private javax.swing.JTextField jImagePathUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1079,6 +1174,7 @@ public class updateForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelImage;
     private javax.swing.JTextField jPassword;
     private javax.swing.JTextField jPhoneNumber;
     private javax.swing.JTextField jPositionTitle;
@@ -1089,6 +1185,7 @@ public class updateForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel jShowImageUpdate;
     private javax.swing.JTextField jStreetAddress;
     private javax.swing.JLabel lAge;
     private javax.swing.JLabel lBirth;
